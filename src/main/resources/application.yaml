@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: subscriptionhub
+  datasource:
+    url: jdbc:postgresql://localhost:5432/subscription_system
+    username: boomzin
+    password: boomzin
+    driver-class-name: org.postgresql.Driver

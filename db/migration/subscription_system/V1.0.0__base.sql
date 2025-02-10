@@ -1,3 +1,4 @@
+-- Установка search_path
 ALTER DATABASE subscription_system SET search_path TO subscription_system;
 
 -- Таблица ролей пользователей
@@ -25,23 +26,18 @@ CREATE TABLE subscription_types (
                                     features JSONB
 );
 
--- Таблица подписок (без подзапроса в GENERATED)
+-- Таблица подписок (удалено GENERATED поле, добавлен статус с триггером)
 CREATE TABLE subscriptions (
                                id SERIAL PRIMARY KEY,
                                user_id INT REFERENCES users(id) ON DELETE CASCADE,
                                type_id INT REFERENCES subscription_types(id) ON DELETE SET NULL,
                                start_date DATE NOT NULL,
                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                               end_date DATE,  -- убрали GENERATED
-                               status VARCHAR(50) GENERATED ALWAYS AS (
-                                   CASE
-                                       WHEN CURRENT_DATE <= end_date THEN 'Active'
-                                       ELSE 'Expired'
-                                       END
-                                   ) STORED
+                               end_date DATE,
+                               status VARCHAR(50)  -- Статус обновляется через триггер
 );
 
--- Триггер для автоматического вычисления end_date
+-- Функция для установки даты окончания подписки
 CREATE OR REPLACE FUNCTION set_end_date()
     RETURNS TRIGGER AS $$
 BEGIN
@@ -55,10 +51,29 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Триггер для автоматического вычисления end_date
 CREATE TRIGGER trigger_set_end_date
     BEFORE INSERT OR UPDATE ON subscriptions
     FOR EACH ROW
 EXECUTE FUNCTION set_end_date();
+
+-- Функция для обновления статуса подписки
+CREATE OR REPLACE FUNCTION update_subscription_status()
+    RETURNS TRIGGER AS $$
+BEGIN
+    NEW.status := CASE
+                      WHEN CURRENT_DATE <= NEW.end_date THEN 'Active'
+                      ELSE 'Expired'
+        END;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Триггер для обновления статуса
+CREATE TRIGGER trigger_update_status
+    BEFORE INSERT OR UPDATE ON subscriptions
+    FOR EACH ROW
+EXECUTE FUNCTION update_subscription_status();
 
 -- Таблица сессий пользователей
 CREATE TABLE sessions (

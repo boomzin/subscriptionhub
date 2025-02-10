@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<configuration>
+    <jdbc>
+        <driver>org.postgresql.Driver</driver>
+        <url>jdbc:postgresql://localhost:5432/subscription_system</url>
+        <user>boomzin</user>
+        <password>boomzin</password>
+    </jdbc>
+
+    <generator>
+        <name>org.jooq.codegen.JavaGenerator</name>
+        <database>
+            <name>org.jooq.meta.postgres.PostgresDatabase</name>
+            <inputSchema>subscription_system</inputSchema>
+            <includes>.*</includes>
+            <recordVersionFields>VERSION</recordVersionFields>
+            <includeExcludeColumns>true</includeExcludeColumns>
+            <excludes>flyway_schema_history</excludes>
+            <outputSchemaToDefault>true</outputSchemaToDefault>
+            <includeForeignKeys>true</includeForeignKeys>
+            <dateAsTimestamp>true</dateAsTimestamp>
+        </database>
+        <generate>
+            <daos>true</daos>
+            <pojos>true</pojos>
+            <immutablePojos>true</immutablePojos>
+            <fluentSetters>true</fluentSetters>
+        </generate>
+        <target>
+            <packageName>com.boomzin.subscriptionhub.db.generated</packageName>
+            <directory>./src/main/java</directory>
+        </target>
+    </generator>
+</configuration>
