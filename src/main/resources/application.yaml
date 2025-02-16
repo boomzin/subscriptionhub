@@ -1,8 +1,11 @@
 spring:
   application:
     name: subscriptionhub
-  datasource:
-    url: jdbc:postgresql://localhost:5432/subscription_system
-    username: boomzin
-    password: boomzin
-    driver-class-name: org.postgresql.Driver
+db:
+  jdbcUrl: jdbc:postgresql://localhost:5432/subscription_system
+  username: boomzin
+  password: boomzin
+  driverClassName: org.postgresql.Driver
+  maximumPoolSize: 20
+  minimumIdle: 1
+  idleTimeout: 60000

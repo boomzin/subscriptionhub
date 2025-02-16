@@ -27,8 +27,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-jooq")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 
-
+	compileOnly("org.projectlombok:lombok:1.18.36")
+	implementation("joda-time:joda-time:2.13.1")
+	annotationProcessor ("org.projectlombok:lombok")
 	"jooqGenerator"("org.jooq:jooq-codegen:${project.property("jooqVersion")}")
 	"jooqGenerator"("org.postgresql:postgresql:42.7.2")
 	implementation ("org.jooq:jooq:${project.property("jooqVersion")}")
@@ -52,4 +55,9 @@ tasks.register<JavaExec>("generateJooq") {
 	mainClass.set("org.jooq.codegen.GenerationTool")
 	classpath = configurations["jooqGenerator"]
 	args = listOf("${projectDir}/src/main/resources/jooq-config.xml")
+}
+
+
+tasks.withType<JavaCompile> {
+	options.compilerArgs.add("-Xlint:deprecation")
 }
