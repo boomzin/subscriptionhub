@@ -1,36 +1,52 @@
+-- Установка расширения для генерации UUID (если еще не установлено)
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 -- Установка search_path
 ALTER DATABASE subscription_system SET search_path TO subscription_system;
 
+-- Таблица для глобальных прав доступа
+CREATE TABLE permissions (
+                             id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                             name VARCHAR(50) NOT NULL UNIQUE,
+                             description TEXT
+);
+
 -- Таблица ролей пользователей
 CREATE TABLE roles (
-                       id SERIAL PRIMARY KEY,
-                       name VARCHAR(50) NOT NULL UNIQUE,
-                       permissions JSONB
+                       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                       name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Таблица для связывания ролей и прав доступа (многие ко многим)
+CREATE TABLE role_permissions (
+                                  role_id UUID REFERENCES roles(id) ON DELETE CASCADE,
+                                  permission_id UUID REFERENCES permissions(id) ON DELETE CASCADE,
+                                  PRIMARY KEY (role_id, permission_id)
 );
 
 -- Таблица пользователей
 CREATE TABLE users (
-                       id SERIAL PRIMARY KEY,
+                       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                        email VARCHAR(100) NOT NULL UNIQUE,
                        password_hash TEXT NOT NULL,
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                       role_id INT REFERENCES roles(id) ON DELETE SET NULL
+                       role_id UUID REFERENCES roles(id) ON DELETE SET NULL
 );
 
 -- Таблица типов подписок
 CREATE TABLE subscription_types (
-                                    id SERIAL PRIMARY KEY,
+                                    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
                                     name VARCHAR(50) NOT NULL UNIQUE,
                                     duration_days INT NOT NULL,
                                     price DECIMAL(10, 2),
                                     features JSONB
 );
 
--- Таблица подписок (удалено GENERATED поле, добавлен статус с триггером)
+-- Таблица подписок
 CREATE TABLE subscriptions (
-                               id SERIAL PRIMARY KEY,
-                               user_id INT REFERENCES users(id) ON DELETE CASCADE,
-                               type_id INT REFERENCES subscription_types(id) ON DELETE SET NULL,
+                               id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                               user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+                               type_id UUID REFERENCES subscription_types(id) ON DELETE SET NULL,
                                start_date DATE NOT NULL,
                                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                end_date DATE,
@@ -77,8 +93,8 @@ EXECUTE FUNCTION update_subscription_status();
 
 -- Таблица сессий пользователей
 CREATE TABLE sessions (
-                          id SERIAL PRIMARY KEY,
-                          user_id INT REFERENCES users(id) ON DELETE CASCADE,
+                          id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                          user_id UUID REFERENCES users(id) ON DELETE CASCADE,
                           device_id VARCHAR(100) NOT NULL,
                           token TEXT NOT NULL,
                           last_active TIMESTAMP DEFAULT CURRENT_TIMESTAMP
