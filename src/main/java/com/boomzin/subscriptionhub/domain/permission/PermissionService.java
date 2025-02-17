@@ -1,4 +1,4 @@
-package com.boomzin.subscriptionhub.domain.permissions;
+package com.boomzin.subscriptionhub.domain.permission;
 
 import com.boomzin.subscriptionhub.common.data.PagedResult;
 import org.springframework.stereotype.Service;

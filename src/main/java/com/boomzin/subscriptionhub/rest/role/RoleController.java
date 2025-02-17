@@ -1,12 +1,12 @@
-package com.boomzin.subscriptionhub.rest.permission;
+package com.boomzin.subscriptionhub.rest.role;
 
 
 import com.boomzin.subscriptionhub.common.data.PagedResult;
 import com.boomzin.subscriptionhub.common.response.DataApiResponse;
 import com.boomzin.subscriptionhub.common.response.PagedDataApiResponse;
 import com.boomzin.subscriptionhub.common.response.StatusApiResponse;
-import com.boomzin.subscriptionhub.domain.permission.Permission;
-import com.boomzin.subscriptionhub.domain.permission.PermissionService;
+import com.boomzin.subscriptionhub.domain.role.Role;
+import com.boomzin.subscriptionhub.domain.role.RoleService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +19,17 @@ import java.util.stream.Collectors;
 import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
-@RequestMapping(BASIC_PATH_V1 + "/permissions")
-public class PermissionController {
-    private final PermissionService permissionService;
+@RequestMapping(BASIC_PATH_V1 + "/roles")
+public class RoleController {
+    private final RoleService roleService;
 
 
-    public PermissionController(PermissionService permissionService) {
-        this.permissionService = permissionService;
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
     }
 
     @GetMapping()
-    public PagedDataApiResponse<PermissionDto> list(
+    public PagedDataApiResponse<RoleDto> list(
 
             @RequestParam(name = "id", required = false) String id,
             @RequestParam(name = "name", required = false) String name,
@@ -39,7 +39,7 @@ public class PermissionController {
             @RequestParam(name = "order", required = false, defaultValue = "") String orders
     ) {
 
-        PagedResult<Permission> cmdItems = permissionService.search(new HashMap<>() {{
+        PagedResult<Role> cmdItems = roleService.search(new HashMap<>() {{
 
             put("number_mask", id);
             put("description", name);
@@ -50,29 +50,28 @@ public class PermissionController {
         }});
 
 
-        List<PermissionDto> dtoList = cmdItems.getItems().stream()
-                .map(PermissionDto::new)
+        List<RoleDto> dtoList = cmdItems.getItems().stream()
+                .map(RoleDto::new)
                 .collect(Collectors.toList());
 
         return new PagedDataApiResponse<>(dtoList, cmdItems.getItemsCount(), cmdItems.getOffset(), cmdItems.getLimit());
     }
 
     @GetMapping(value = "/{id}")
-    public DataApiResponse<PermissionDto> getByUuid(
+    public DataApiResponse<RoleDto> getByUuid(
             @PathVariable("id") UUID id
     ) {
-        return new DataApiResponse<>(new PermissionDto(permissionService.findById(id)));
+        return new DataApiResponse<>(new RoleDto(roleService.findById(id)));
     }
 
     @PostMapping()
     public StatusApiResponse create(
-            @RequestBody @Valid PermissionDto dto
+            @RequestBody @Valid RoleDto dto
     ) {
-        permissionService.create(
-                new Permission(
+        roleService.create(
+                new Role(
                         UUID.randomUUID(),
-                        dto.getName(),
-                        dto.getDescription()
+                        dto.getName()
                 )
         );
 
@@ -82,13 +81,12 @@ public class PermissionController {
     @PutMapping(value = "/{id}")
     public StatusApiResponse update(
 
-            @RequestBody @Valid PermissionDto dto
+            @RequestBody @Valid RoleDto dto
     ) {
-        permissionService.update(
-                new Permission(
+        roleService.update(
+                new Role(
                         dto.getId(),
-                        dto.getName(),
-                        dto.getDescription()
+                        dto.getName()
                 )
         );
 
@@ -99,7 +97,7 @@ public class PermissionController {
     public StatusApiResponse delete(
             @PathVariable("id") UUID id
     ) {
-        permissionService.delete(id);
+        roleService.delete(id);
 
         return new StatusApiResponse(HttpStatus.OK.value(), true);
     }

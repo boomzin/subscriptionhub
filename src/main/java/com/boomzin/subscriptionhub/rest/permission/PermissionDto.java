@@ -1,6 +1,6 @@
 package com.boomzin.subscriptionhub.rest.permission;
 
-import com.boomzin.subscriptionhub.domain.permissions.Permission;
+import com.boomzin.subscriptionhub.domain.permission.Permission;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,10 +14,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class PermissionDto {
     private UUID id;
-
     @NotBlank
     private String name;
-
     private String description;
 
     public PermissionDto(Permission permission) {
@@ -26,5 +24,4 @@ public class PermissionDto {
                 permission.getName(),
                 permission.getDescription());
     }
-
 }
