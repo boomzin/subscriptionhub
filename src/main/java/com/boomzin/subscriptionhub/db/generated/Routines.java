@@ -4,11 +4,21 @@
 package com.boomzin.subscriptionhub.db.generated;
 
 
-import com.boomzin.subscriptionhub.db.generated.routines.*;
-import org.jooq.Configuration;
-import org.jooq.Field;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidGenerateV1;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidGenerateV1mc;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidGenerateV3;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidGenerateV4;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidGenerateV5;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidNil;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidNsDns;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidNsOid;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidNsUrl;
+import com.boomzin.subscriptionhub.db.generated.routines.UuidNsX500;
 
 import java.util.UUID;
+
+import org.jooq.Configuration;
+import org.jooq.Field;
 
 
 /**

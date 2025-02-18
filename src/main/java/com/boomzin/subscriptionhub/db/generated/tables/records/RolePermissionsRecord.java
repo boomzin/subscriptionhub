@@ -5,10 +5,11 @@ package com.boomzin.subscriptionhub.db.generated.tables.records;
 
 
 import com.boomzin.subscriptionhub.db.generated.tables.RolePermissions;
-import org.jooq.Record2;
-import org.jooq.impl.UpdatableRecordImpl;
 
 import java.util.UUID;
+
+import org.jooq.Record2;
+import org.jooq.impl.UpdatableRecordImpl;
 
 
 /**

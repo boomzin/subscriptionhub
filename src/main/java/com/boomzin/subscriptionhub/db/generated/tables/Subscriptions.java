@@ -6,21 +6,38 @@ package com.boomzin.subscriptionhub.db.generated.tables;
 
 import com.boomzin.subscriptionhub.db.generated.DefaultSchema;
 import com.boomzin.subscriptionhub.db.generated.Keys;
+import com.boomzin.subscriptionhub.db.generated.enums.SubscriptionStatus;
 import com.boomzin.subscriptionhub.db.generated.tables.SubscriptionTypes.SubscriptionTypesPath;
 import com.boomzin.subscriptionhub.db.generated.tables.Users.UsersPath;
 import com.boomzin.subscriptionhub.db.generated.tables.records.SubscriptionsRecord;
-import org.jooq.Record;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.LocalDateAsLocalDateTimeBinding;
-import org.jooq.impl.SQLDataType;
-import org.jooq.impl.TableImpl;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+
+import org.jooq.Condition;
+import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
+import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
+import org.jooq.Record;
+import org.jooq.SQL;
+import org.jooq.Schema;
+import org.jooq.Select;
+import org.jooq.Stringly;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.LocalDateAsLocalDateTimeBinding;
+import org.jooq.impl.SQLDataType;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -77,7 +94,7 @@ public class Subscriptions extends TableImpl<SubscriptionsRecord> {
     /**
      * The column <code>subscriptions.status</code>.
      */
-    public final TableField<SubscriptionsRecord, String> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR(50), this, "");
+    public final TableField<SubscriptionsRecord, SubscriptionStatus> STATUS = createField(DSL.name("status"), SQLDataType.VARCHAR.asEnumDataType(SubscriptionStatus.class), this, "");
 
     private Subscriptions(Name alias, Table<SubscriptionsRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

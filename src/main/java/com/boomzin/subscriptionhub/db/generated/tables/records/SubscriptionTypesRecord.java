@@ -5,12 +5,13 @@ package com.boomzin.subscriptionhub.db.generated.tables.records;
 
 
 import com.boomzin.subscriptionhub.db.generated.tables.SubscriptionTypes;
-import org.jooq.JSONB;
-import org.jooq.Record1;
-import org.jooq.impl.UpdatableRecordImpl;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+
+import org.jooq.JSONB;
+import org.jooq.Record1;
+import org.jooq.impl.UpdatableRecordImpl;
 
 
 /**

@@ -4,13 +4,20 @@
 package com.boomzin.subscriptionhub.db.generated;
 
 
-import com.boomzin.subscriptionhub.db.generated.tables.*;
-import org.jooq.Catalog;
-import org.jooq.Table;
-import org.jooq.impl.SchemaImpl;
+import com.boomzin.subscriptionhub.db.generated.tables.Permissions;
+import com.boomzin.subscriptionhub.db.generated.tables.RolePermissions;
+import com.boomzin.subscriptionhub.db.generated.tables.Roles;
+import com.boomzin.subscriptionhub.db.generated.tables.Sessions;
+import com.boomzin.subscriptionhub.db.generated.tables.SubscriptionTypes;
+import com.boomzin.subscriptionhub.db.generated.tables.Subscriptions;
+import com.boomzin.subscriptionhub.db.generated.tables.Users;
 
 import java.util.Arrays;
 import java.util.List;
+
+import org.jooq.Catalog;
+import org.jooq.Table;
+import org.jooq.impl.SchemaImpl;
 
 
 /**

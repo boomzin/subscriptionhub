@@ -4,15 +4,17 @@
 package com.boomzin.subscriptionhub.db.generated.tables.daos;
 
 
+import com.boomzin.subscriptionhub.db.generated.enums.SubscriptionStatus;
 import com.boomzin.subscriptionhub.db.generated.tables.Subscriptions;
 import com.boomzin.subscriptionhub.db.generated.tables.records.SubscriptionsRecord;
-import org.jooq.Configuration;
-import org.jooq.impl.DAOImpl;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.jooq.Configuration;
+import org.jooq.impl.DAOImpl;
 
 
 /**
@@ -148,14 +150,14 @@ public class SubscriptionsDao extends DAOImpl<SubscriptionsRecord, com.boomzin.s
      * Fetch records that have <code>status BETWEEN lowerInclusive AND
      * upperInclusive</code>
      */
-    public List<com.boomzin.subscriptionhub.db.generated.tables.pojos.Subscriptions> fetchRangeOfStatus(String lowerInclusive, String upperInclusive) {
+    public List<com.boomzin.subscriptionhub.db.generated.tables.pojos.Subscriptions> fetchRangeOfStatus(SubscriptionStatus lowerInclusive, SubscriptionStatus upperInclusive) {
         return fetchRange(Subscriptions.SUBSCRIPTIONS.STATUS, lowerInclusive, upperInclusive);
     }
 
     /**
      * Fetch records that have <code>status IN (values)</code>
      */
-    public List<com.boomzin.subscriptionhub.db.generated.tables.pojos.Subscriptions> fetchByStatus(String... values) {
+    public List<com.boomzin.subscriptionhub.db.generated.tables.pojos.Subscriptions> fetchByStatus(SubscriptionStatus... values) {
         return fetch(Subscriptions.SUBSCRIPTIONS.STATUS, values);
     }
 }

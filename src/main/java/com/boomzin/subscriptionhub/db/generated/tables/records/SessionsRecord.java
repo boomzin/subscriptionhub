@@ -5,11 +5,12 @@ package com.boomzin.subscriptionhub.db.generated.tables.records;
 
 
 import com.boomzin.subscriptionhub.db.generated.tables.Sessions;
-import org.jooq.Record1;
-import org.jooq.impl.UpdatableRecordImpl;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import org.jooq.Record1;
+import org.jooq.impl.UpdatableRecordImpl;
 
 
 /**

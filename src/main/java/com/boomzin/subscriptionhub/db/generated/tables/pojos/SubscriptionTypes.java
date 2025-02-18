@@ -4,11 +4,11 @@
 package com.boomzin.subscriptionhub.db.generated.tables.pojos;
 
 
-import org.jooq.JSONB;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.UUID;
+
+import org.jooq.JSONB;
 
 
 /**

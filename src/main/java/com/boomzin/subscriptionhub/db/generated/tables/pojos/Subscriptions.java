@@ -4,6 +4,8 @@
 package com.boomzin.subscriptionhub.db.generated.tables.pojos;
 
 
+import com.boomzin.subscriptionhub.db.generated.enums.SubscriptionStatus;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -23,7 +25,7 @@ public class Subscriptions implements Serializable {
     private final LocalDateTime startDate;
     private final LocalDateTime createdAt;
     private final LocalDateTime endDate;
-    private final String status;
+    private final SubscriptionStatus status;
 
     public Subscriptions(Subscriptions value) {
         this.id = value.id;
@@ -42,7 +44,7 @@ public class Subscriptions implements Serializable {
         LocalDateTime startDate,
         LocalDateTime createdAt,
         LocalDateTime endDate,
-        String status
+        SubscriptionStatus status
     ) {
         this.id = id;
         this.userId = userId;
@@ -98,7 +100,7 @@ public class Subscriptions implements Serializable {
     /**
      * Getter for <code>subscriptions.status</code>.
      */
-    public String getStatus() {
+    public SubscriptionStatus getStatus() {
         return this.status;
     }
 

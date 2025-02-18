@@ -8,17 +8,34 @@ import com.boomzin.subscriptionhub.db.generated.DefaultSchema;
 import com.boomzin.subscriptionhub.db.generated.Keys;
 import com.boomzin.subscriptionhub.db.generated.tables.Subscriptions.SubscriptionsPath;
 import com.boomzin.subscriptionhub.db.generated.tables.records.SubscriptionTypesRecord;
-import org.jooq.Record;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.SQLDataType;
-import org.jooq.impl.TableImpl;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+
+import org.jooq.Condition;
+import org.jooq.Field;
+import org.jooq.ForeignKey;
+import org.jooq.InverseForeignKey;
+import org.jooq.JSONB;
+import org.jooq.Name;
+import org.jooq.Path;
+import org.jooq.PlainSQL;
+import org.jooq.QueryPart;
+import org.jooq.Record;
+import org.jooq.SQL;
+import org.jooq.Schema;
+import org.jooq.Select;
+import org.jooq.Stringly;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.TableOptions;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.SQLDataType;
+import org.jooq.impl.TableImpl;
 
 
 /**

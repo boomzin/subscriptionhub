@@ -6,12 +6,13 @@ package com.boomzin.subscriptionhub.db.generated.tables.daos;
 
 import com.boomzin.subscriptionhub.db.generated.tables.Roles;
 import com.boomzin.subscriptionhub.db.generated.tables.records.RolesRecord;
-import org.jooq.Configuration;
-import org.jooq.impl.DAOImpl;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.jooq.Configuration;
+import org.jooq.impl.DAOImpl;
 
 
 /**

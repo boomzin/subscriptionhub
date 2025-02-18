@@ -4,12 +4,14 @@
 package com.boomzin.subscriptionhub.db.generated.tables.records;
 
 
+import com.boomzin.subscriptionhub.db.generated.enums.SubscriptionStatus;
 import com.boomzin.subscriptionhub.db.generated.tables.Subscriptions;
-import org.jooq.Record1;
-import org.jooq.impl.UpdatableRecordImpl;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import org.jooq.Record1;
+import org.jooq.impl.UpdatableRecordImpl;
 
 
 /**
@@ -113,7 +115,7 @@ public class SubscriptionsRecord extends UpdatableRecordImpl<SubscriptionsRecord
     /**
      * Setter for <code>subscriptions.status</code>.
      */
-    public SubscriptionsRecord setStatus(String value) {
+    public SubscriptionsRecord setStatus(SubscriptionStatus value) {
         set(6, value);
         return this;
     }
@@ -121,8 +123,8 @@ public class SubscriptionsRecord extends UpdatableRecordImpl<SubscriptionsRecord
     /**
      * Getter for <code>subscriptions.status</code>.
      */
-    public String getStatus() {
-        return (String) get(6);
+    public SubscriptionStatus getStatus() {
+        return (SubscriptionStatus) get(6);
     }
 
     // -------------------------------------------------------------------------
@@ -148,7 +150,7 @@ public class SubscriptionsRecord extends UpdatableRecordImpl<SubscriptionsRecord
     /**
      * Create a detached, initialised SubscriptionsRecord
      */
-    public SubscriptionsRecord(UUID id, UUID userId, UUID typeId, LocalDateTime startDate, LocalDateTime createdAt, LocalDateTime endDate, String status) {
+    public SubscriptionsRecord(UUID id, UUID userId, UUID typeId, LocalDateTime startDate, LocalDateTime createdAt, LocalDateTime endDate, SubscriptionStatus status) {
         super(Subscriptions.SUBSCRIPTIONS);
 
         setId(id);

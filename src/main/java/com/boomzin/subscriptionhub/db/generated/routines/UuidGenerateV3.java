@@ -5,13 +5,14 @@ package com.boomzin.subscriptionhub.db.generated.routines;
 
 
 import com.boomzin.subscriptionhub.db.generated.DefaultSchema;
+
+import java.util.UUID;
+
 import org.jooq.Field;
 import org.jooq.Parameter;
 import org.jooq.impl.AbstractRoutine;
 import org.jooq.impl.Internal;
 import org.jooq.impl.SQLDataType;
-
-import java.util.UUID;
 
 
 /**
