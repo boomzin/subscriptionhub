@@ -30,7 +30,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
 	compileOnly("org.projectlombok:lombok:1.18.36")
-	implementation("joda-time:joda-time:2.13.1")
 	annotationProcessor ("org.projectlombok:lombok")
 	"jooqGenerator"("org.jooq:jooq-codegen:${project.property("jooqVersion")}")
 	"jooqGenerator"("org.postgresql:postgresql:42.7.2")
