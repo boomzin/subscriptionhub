@@ -45,7 +45,7 @@ public class SessionController {
             put("number_mask", id);
             put("userId", userId);
             put("deviceId", deviceId);
-            put("detokenscription", token);
+            put("token", token);
 
             put("offset", String.valueOf(offset));
             put("limit", String.valueOf(limit));
