@@ -41,8 +41,8 @@ public class PermissionController {
 
         PagedResult<Permission> cmdItems = permissionService.search(new HashMap<>() {{
 
-            put("number_mask", id);
-            put("description", name);
+            put("id", id);
+            put("name", name);
 
             put("offset", String.valueOf(offset));
             put("limit", String.valueOf(limit));

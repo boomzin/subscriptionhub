@@ -42,7 +42,7 @@ public class SessionController {
 
         PagedResult<Session> cmdItems = sessionService.search(new HashMap<>() {{
 
-            put("number_mask", id);
+            put("id", id);
             put("userId", userId);
             put("deviceId", deviceId);
             put("token", token);
