@@ -1,9 +1,11 @@
 package com.boomzin.subscriptionhub.common.search;
 
+import com.boomzin.subscriptionhub.db.generated.enums.SubscriptionStatus;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.impl.DSL;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +32,11 @@ public class JooqSearchUtils {
     public static final BiFunction<Field<OffsetDateTime>, String, Condition> DATE_TIME_EQ = (f, v) -> f.eq(dateTime(v));
     public static final BiFunction<Field<OffsetDateTime>, String, Condition> DATE_TIME_FROM = (f, v) -> f.ge(dateTime(v));
     public static final BiFunction<Field<OffsetDateTime>, String, Condition> DATE_TIME_TO = (f, v) -> f.lt(dateTime(v));
+    public static final BiFunction<Field<LocalDate>, String, Condition> DATE_EQ = (f, v) -> f.eq(localDate(v));
+    public static final BiFunction<Field<LocalDate>, String, Condition> DATE_FROM = (f, v) -> f.ge(localDate(v));
+    public static final BiFunction<Field<LocalDate>, String, Condition> DATE_TO = (f, v) -> f.lt(localDate(v));
+
+    public static final BiFunction<Field<SubscriptionStatus>, String, Condition> STATUS_EQ = (f, v) -> f.lt(subscriptionStatus(v));
 
     public static final BiFunction<Field<LocalDateTime>, String, Condition> DTT_MIN_EQ_STR =
             (f, v) -> f.ge(getTimestamp(v));
@@ -96,6 +103,15 @@ public class JooqSearchUtils {
     private static OffsetDateTime dateTime(String value) {
         return OffsetDateTime.parse(value);
     }
+
+    private static LocalDate localDate(String value) {
+        return LocalDate.parse(value);
+    }
+
+    private static SubscriptionStatus subscriptionStatus(String value) {
+        return SubscriptionStatus.valueOf(value);
+    }
+
 
     private static LocalDateTime getTimestamp(String s) {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
