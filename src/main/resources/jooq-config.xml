@@ -18,13 +18,20 @@
             <excludes>flyway_schema_history</excludes>
             <outputSchemaToDefault>true</outputSchemaToDefault>
             <includeForeignKeys>true</includeForeignKeys>
-            <dateAsTimestamp>true</dateAsTimestamp>
         </database>
         <generate>
-            <daos>true</daos>
+            <relations>true</relations>
+            <deprecated>false</deprecated>
+            <generatedAnnotation>true</generatedAnnotation>
+            <records>true</records>
             <pojos>true</pojos>
-            <immutablePojos>true</immutablePojos>
-            <fluentSetters>true</fluentSetters>
+            <immutablePojos>false</immutablePojos>
+            <interfaces>true</interfaces>
+            <daos>false</daos>
+            <jpaAnnotations>false</jpaAnnotations>
+            <validationAnnotations>false</validationAnnotations>
+            <globalObjectReferences>true</globalObjectReferences>
+            <fluentSetters>false</fluentSetters>
         </generate>
         <target>
             <packageName>com.boomzin.subscriptionhub.db.generated</packageName>
