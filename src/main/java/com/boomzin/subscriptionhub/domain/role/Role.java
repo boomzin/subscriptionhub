@@ -13,6 +13,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role extends UuidEntity {
-    private UUID uuid;
     private String name;
+
+    public Role(UUID id, String name) {
+        super(id);
+        this.name = name;
+    }
 }

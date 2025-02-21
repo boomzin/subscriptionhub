@@ -15,9 +15,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SubscriptionType extends UuidEntity {
-    private UUID id;
     private String name;
     private Integer durationDays;
     private BigDecimal price;
     private JSONB feature;
+
+    public SubscriptionType(UUID id, String name, Integer durationDays, BigDecimal price, JSONB features) {
+        super(id);
+        this.name = name;
+        this.durationDays = durationDays;
+        this.price = price;
+        this.feature = features;
+    }
 }

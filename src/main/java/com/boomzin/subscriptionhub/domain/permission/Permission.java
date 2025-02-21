@@ -13,7 +13,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Permission extends UuidEntity {
-    private UUID uuid;
     private String name;
     private String description;
+
+    public Permission(UUID id, String name, String description) {
+        super(id);
+        this.name = name;
+        this.description = description;
+    }
 }

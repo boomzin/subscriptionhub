@@ -15,9 +15,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Session extends UuidEntity {
-    private UUID id;
     private UUID userId;
     private String deviceId;
     private String token;
     private LocalDateTime lastActive;
+
+    public Session(UUID id, UUID userId, String deviceId, String token, LocalDateTime lastActive) {
+        super(id);
+        this.userId = userId;
+        this.deviceId = deviceId;
+        this.token = token;
+        this.lastActive = lastActive;
+    }
 }
