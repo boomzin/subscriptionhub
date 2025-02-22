@@ -40,7 +40,7 @@ public class PersistenceConfig {
         settings.setRenderSchema(true);
         settings.setExecuteWithOptimisticLocking(true);
         settings.withExecuteWithOptimisticLockingExcludeUnversioned(true);
-        settings.setRenderNameCase(RenderNameCase.UPPER);
+        settings.setRenderNameCase(RenderNameCase.LOWER);
         return settings;
     }
 
