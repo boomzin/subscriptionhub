@@ -69,10 +69,16 @@ make build
   ```
   или
 ````
-  sudo rm -rf ./docker_for_dev/data/* && \
-  mkdir -pv ./docker_for_dev/data/etcd && \
-  mkdir -pv ./docker_for_dev/data/{postgres1,postgres2}/{etcd,pgsql}
+  sudo rm -rf ./docker/pgdata && \
+  mkdir -pv ./docker/pgdata
 ````
+
+sudo rm -rf ./docker/pgdata && \
+mkdir -pv ./docker/pgdata
+
+
+
+
   
 * Запустить котейнеры:
   ```

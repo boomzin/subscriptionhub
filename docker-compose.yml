@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_DB: subscription_system
+      POSTGRES_USER: boomzin
+      POSTGRES_PASSWORD: boomzin
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  flyway:
+    container_name: flyway
+    build:
+      context: ./
+      dockerfile: ./docker/flyway/Dockerfile
+    environment:
+      - TZ=Europe/Moscow
+    volumes:
+      - ./db/migration/:/flyway/sql:ro
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    container_name: subscriptionhub-app
+    restart: always
+    depends_on:
+      - postgres
+      - flyway
+    environment:
+      # Если вы хотите использовать внешний application.yaml вместо встроенного в jar,
+      # можно смонтировать его и задать SPRING_CONFIG_LOCATION
+      SPRING_CONFIG_LOCATION: "file:/config/application.yaml"
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/subscription_system
+#      SPRING_DATASOURCE_USERNAME: boomzin
+#      SPRING_DATASOURCE_PASSWORD: boomzin
+    ports:
+      - "8090:8090"  # Прямой доступ к API приложения
+    volumes:
+      - ./docker/config/application-container.yaml:/config/application.yaml:ro
+      - ./docker/app/start.sh:/app/start.sh:ro
+    networks:
+      - app-network
+
+
+  nginx:
+    image: nginx:stable-alpine-perl
+    container_name: subscriptionhub-nginx
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  pgdata:

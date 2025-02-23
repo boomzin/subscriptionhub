@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 public class PersistenceConfig {
 
     @Bean
-    @ConfigurationProperties("db")
+    @ConfigurationProperties("spring.datasource")
     DataSource dataSource() {
         return new HikariDataSource();
     }

@@ -14,6 +14,12 @@ java {
 	}
 }
 
+tasks {
+	bootJar {
+		archiveFileName.set("subscriptionhub.jar")
+	}
+}
+
 configurations {
 	create("jooqGenerator")
 }

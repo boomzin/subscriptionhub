@@ -1,8 +1,10 @@
+server:
+  port: 8090
 spring:
   application:
     name: subscriptionhub
-  datasource:
-    jdbcUrl: jdbc:postgresql://localhost:5432/subscription_system
+  db:
+    jdbcUrl: jdbc:postgresql://postgres:5432/subscription_system
     username: boomzin
     password: boomzin
     driverClassName: org.postgresql.Driver
