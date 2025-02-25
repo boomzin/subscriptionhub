@@ -3,7 +3,7 @@ server:
 spring:
   application:
     name: subscriptionhub
-  db:
+  datasource:
     jdbcUrl: jdbc:postgresql://postgres:5432/subscription_system
     username: boomzin
     password: boomzin

@@ -42,13 +42,10 @@ services:
       # Если вы хотите использовать внешний application.yaml вместо встроенного в jar,
       # можно смонтировать его и задать SPRING_CONFIG_LOCATION
       SPRING_CONFIG_LOCATION: "file:/config/application.yaml"
-#      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/subscription_system
-#      SPRING_DATASOURCE_USERNAME: boomzin
-#      SPRING_DATASOURCE_PASSWORD: boomzin
     ports:
       - "8090:8090"  # Прямой доступ к API приложения
     volumes:
-      - ./docker/config/application-container.yaml:/config/application.yaml:ro
+      - ./docker/app/application.yaml:/config/application.yaml:ro
       - ./docker/app/start.sh:/app/start.sh:ro
     networks:
       - app-network

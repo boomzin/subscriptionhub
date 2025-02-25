@@ -1,21 +1,49 @@
-## RTK IN
-
 ### Development Environment
 
-1. JDK 21
+1. JDK 17
 2. PostgreSql
 3. Docker
 
-### Tips
+* Склонируйте проект. 
+* Перед первым запуском создайте папку для файлов бд командой:
+````
+  mkdir -pv ./docker/pgdata
+````
+* Запустите контенеры:
+````
+docker compose up -d --force-recreate
+````
+После завершения запуска у вас останется три контейнера: контейнер с nginx, контейнер с postgresql и контейнер с приложением.
+Бд будет доступна на стандартном порту:
+````
+jdbc:postgresql://localhost:5432/subscription_system
+````
+Учетная запись для подключения:
+login:    boomzin
+password: boomzin
 
-#### Build:
-```
-./gradlew build
-```
-or
-```
-make build
-```
+Приложение будет отвечать на запросы напрямую на порту 8090:
+````
+curl --location '127.0.0.1:8090/api/rest/subscriptions/v1/permissions'
+````
+а также через контейнер nginx:
+````
+curl --location 'http://localhost/subscriptions/permissions'
+````
+Также можно запустить параллельно еще один экземпляр приложения в IDE, оно подключиться к бд в контейнере и будет отвечать на запросы на порту 8080:
+````
+curl --location '127.0.0.1:8080/api/rest/subscriptions/v1/permissions'
+````
+
+Остановить контейнеры:
+````
+docker compose down -v
+````
+Если нужно обнулить значения в бд нужно остановить контейнеры и пересоздать каталог с файлами бд:
+````
+  sudo rm -rf ./docker/pgdata && \
+  mkdir -pv ./docker/pgdata
+````
 
 
 
@@ -26,94 +54,3 @@ make build
 ```
 ./gradlew bootRun
 ```
-
-
-## DEV окружение
-### Все БД PostgreSQL доступны со следующими параметрами:
-* login: boomzin
-* password: boomzin
-* read\write port: 5432
-
-
-### Для того что бы звпустить контейнеры с базами данных необходимо:
-* Создать каталоги:
-  ```
-  mkdir -pv ./docker_for_dev/data/etcd
-  mkdir -pv ./docker_for_dev/data/{postgres1,postgres2}/{etcd,pgsql}
-  ```
-* Выполнить команду:
-  ```
-  docker compose -f dev_env.yaml up -d --build --remove-orphans
-  ```
-
-### Для того что бы остановить контейнеры необходимо:
-* Выполнить команду:
-  ```
-  docker compose -f dev_env.yaml down -v --rmi local
-  ```
-
-### Если необходимо сбросить базы данных до дефолтного состояния:
-* Остановить контейнеры:
-  ```
-  docker compose -f dev_env.yaml down -v --rmi local
-  ```
-* Удалить данные сохраненые на локальной машине:
-  ```
-  sudo rm -rf ./docker_for_dev/data/postgres2/etcd/* && \
-  sudo rm -rf ./docker_for_dev/data/postgres1/etcd/* && \
-  sudo rm -rf ./docker_for_dev/data/postgres2/pgsql && \
-  sudo rm -rf ./docker_for_dev/data/postgres1/pgsql && \
-  sudo rm -rf ./docker_for_dev/data/etcd/*; \
-  mkdir docker_for_dev/data/postgres1/pgsql && \
-  mkdir docker_for_dev/data/postgres2/pgsql
-  ```
-  или
-````
-  sudo rm -rf ./docker/pgdata && \
-  mkdir -pv ./docker/pgdata
-````
-
-sudo rm -rf ./docker/pgdata && \
-mkdir -pv ./docker/pgdata
-
-
-
-
-  
-* Запустить котейнеры:
-  ```
-  docker compose -f dev_env.yaml up -d --build --remove-orphans
-  ```
-
-### Если `read only` базы не доступны дольше 10 минут необходимо:
-* Зайти в один из контейнеров postgres:
-  ```
-  docker exec -it postgres1 bash
-  ```
-* Посмотреть состояние кластера patroni:
-  ```
-  patronictl -c /etc/patroni.yml list
-  ```
-  Пример результата выполнения команды:
-  ```
-  + Cluster: db-dev ------------+---------+------------------+----+-----------+
-  | Member    | Host            | Role    | State            | TL | Lag in MB |
-  +-----------+-----------------+---------+------------------+----+-----------+
-  | postgres1 | postgres1:25432 | Replica | creating replica |    |   unknown |
-  | postgres2 | postgres2:25432 | Leader  | running          |  1 |           |
-  +-----------+-----------------+---------+------------------+----+-----------+
-  ```
-* Выполнить команду для реинициализации узла в состоянии `creating replica`:
-  ```
-  patronictl -c /etc/patroni.yml reinit db-dev postgres1
-  ```
-  Пример корректного состояния кластера:
-  ```
-  + Cluster: db-dev ------------+---------+---------+----+-----------+
-  | Member    | Host            | Role    | State   | TL | Lag in MB |
-  +-----------+-----------------+---------+---------+----+-----------+
-  | postgres1 | postgres1:25432 | Leader  | running |  2 |           |
-  | postgres2 | postgres2:25432 | Replica | running |  2 |         0 |
-  +-----------+-----------------+---------+---------+----+-----------+
-  ```
-  
