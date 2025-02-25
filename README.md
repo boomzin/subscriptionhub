@@ -44,13 +44,3 @@ docker compose down -v
   sudo rm -rf ./docker/pgdata && \
   mkdir -pv ./docker/pgdata
 ````
-
-
-
-#### Local run:
-1. Install PostgreSql, create user 'boomzin' with password 'boomzin'
-2. Create and migrate DB schemas (see above)
-3. Run:
-```
-./gradlew bootRun
-```
