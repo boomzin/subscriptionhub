@@ -12,6 +12,7 @@ import com.boomzin.subscriptionhub.domain.user.User;
 import com.boomzin.subscriptionhub.domain.user.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -37,7 +38,7 @@ public class LoginService {
     }
 
     public String login(String login, String password, String deviceId) {
-        if(deviceId == null) {
+        if(!StringUtils.hasText(deviceId)) {
             throw new DomainException(400, "empty device id");
         }
         Optional<User> user = userRepository.getByEmail(login);
