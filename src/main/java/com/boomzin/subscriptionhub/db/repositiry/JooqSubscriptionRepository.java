@@ -56,7 +56,7 @@ public class JooqSubscriptionRepository implements SubscriptionRepository {
 
     @Override
     public void create(Subscription permission) {
-        SubscriptionsRecord record = new SubscriptionsRecord();
+        SubscriptionsRecord record = db.newRecord(SUBSCRIPTIONS);
         fillRecord(record, permission);
         record.insert();
     }
@@ -110,9 +110,9 @@ public class JooqSubscriptionRepository implements SubscriptionRepository {
     }
 
     @Override
-    public void delete(UUID permissionUuid) {
+    public void delete(UUID permissionId) {
         db.deleteFrom(SUBSCRIPTIONS)
-                .where(SUBSCRIPTIONS.ID.eq(permissionUuid))
+                .where(SUBSCRIPTIONS.ID.eq(permissionId))
                 .execute();
     }
 

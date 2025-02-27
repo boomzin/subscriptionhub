@@ -46,7 +46,7 @@ public class JooqPermissionRepository implements PermissionRepository {
 
     @Override
     public void create(Permission permission) {
-        PermissionsRecord record = new PermissionsRecord();
+        PermissionsRecord record =db.newRecord(PERMISSIONS);
         fillRecord(record, permission);
         record.insert();
     }
@@ -65,12 +65,12 @@ public class JooqPermissionRepository implements PermissionRepository {
     }
 
     @Override
-    public Permission findById(UUID permissionUuid) {
+    public Permission findById(UUID permissionId) {
         return db
                 .selectFrom(PERMISSIONS)
-                .where(PERMISSIONS.ID.eq(permissionUuid))
+                .where(PERMISSIONS.ID.eq(permissionId))
                 .fetchOptional(mapper)
-                .orElseThrow(() -> new ObjectNotFoundException(permissionUuid, "Permission"));
+                .orElseThrow(() -> new ObjectNotFoundException(permissionId, "Permission"));
     }
 
     @Override
@@ -90,9 +90,9 @@ public class JooqPermissionRepository implements PermissionRepository {
     }
 
     @Override
-    public void delete(UUID permissionUuid) {
+    public void delete(UUID permissionId) {
         db.deleteFrom(PERMISSIONS)
-                .where(PERMISSIONS.ID.eq(permissionUuid))
+                .where(PERMISSIONS.ID.eq(permissionId))
                 .execute();
     }
 

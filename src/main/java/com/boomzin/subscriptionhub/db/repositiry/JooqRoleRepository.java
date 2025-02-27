@@ -45,7 +45,7 @@ public class JooqRoleRepository implements RoleRepository {
 
     @Override
     public void create(Role permission) {
-        RolesRecord record = new RolesRecord();
+        RolesRecord record = db.newRecord(ROLES);
         fillRecord(record, permission);
         record.insert();
     }
@@ -64,12 +64,12 @@ public class JooqRoleRepository implements RoleRepository {
     }
 
     @Override
-    public Role findById(UUID permissionUuid) {
+    public Role findById(UUID permissionId) {
         return db
                 .selectFrom(ROLES)
-                .where(ROLES.ID.eq(permissionUuid))
+                .where(ROLES.ID.eq(permissionId))
                 .fetchOptional(mapper)
-                .orElseThrow(() -> new ObjectNotFoundException(permissionUuid, "Role"));
+                .orElseThrow(() -> new ObjectNotFoundException(permissionId, "Role"));
     }
 
     @Override
@@ -89,9 +89,9 @@ public class JooqRoleRepository implements RoleRepository {
     }
 
     @Override
-    public void delete(UUID permissionUuid) {
+    public void delete(UUID permissionId) {
         db.deleteFrom(ROLES)
-                .where(ROLES.ID.eq(permissionUuid))
+                .where(ROLES.ID.eq(permissionId))
                 .execute();
     }
 

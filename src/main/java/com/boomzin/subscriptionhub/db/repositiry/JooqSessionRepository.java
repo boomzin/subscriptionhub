@@ -51,7 +51,7 @@ public class JooqSessionRepository implements SessionRepository {
 
     @Override
     public void create(Session session) {
-        SessionsRecord record = new SessionsRecord();
+        SessionsRecord record = db.newRecord(SESSIONS);
         fillRecord(record, session);
         record.insert();
     }
@@ -70,12 +70,12 @@ public class JooqSessionRepository implements SessionRepository {
     }
 
     @Override
-    public Session findById(UUID sessionUuid) {
+    public Session findById(UUID sessionId) {
         return db
                 .selectFrom(SESSIONS)
-                .where(SESSIONS.ID.eq(sessionUuid))
+                .where(SESSIONS.ID.eq(sessionId))
                 .fetchOptional(mapper)
-                .orElseThrow(() -> new ObjectNotFoundException(sessionUuid, "Session"));
+                .orElseThrow(() -> new ObjectNotFoundException(sessionId, "Session"));
     }
 
     @Override
@@ -103,9 +103,9 @@ public class JooqSessionRepository implements SessionRepository {
     }
 
     @Override
-    public void delete(UUID sessionUuid) {
+    public void delete(UUID sessionId) {
         db.deleteFrom(SESSIONS)
-                .where(SESSIONS.ID.eq(sessionUuid))
+                .where(SESSIONS.ID.eq(sessionId))
                 .execute();
     }
 

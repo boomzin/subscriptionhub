@@ -48,7 +48,7 @@ public class JooqUserRepository implements UserRepository {
 
     @Override
     public void create(User user) {
-        UsersRecord record = new UsersRecord();
+        UsersRecord record = db.newRecord(USERS);
         fillRecord(record, user);
         record.insert();
     }
@@ -67,12 +67,12 @@ public class JooqUserRepository implements UserRepository {
     }
 
     @Override
-    public User findById(UUID userUuid) {
+    public User findById(UUID userId) {
         return db
                 .selectFrom(USERS)
-                .where(USERS.ID.eq(userUuid))
+                .where(USERS.ID.eq(userId))
                 .fetchOptional(mapper)
-                .orElseThrow(() -> new ObjectNotFoundException(userUuid, "User"));
+                .orElseThrow(() -> new ObjectNotFoundException(userId, "User"));
     }
 
     @Override
@@ -100,9 +100,9 @@ public class JooqUserRepository implements UserRepository {
     }
 
     @Override
-    public void delete(UUID userUuid) {
+    public void delete(UUID userId) {
         db.deleteFrom(USERS)
-                .where(USERS.ID.eq(userUuid))
+                .where(USERS.ID.eq(userId))
                 .execute();
     }
 

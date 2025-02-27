@@ -44,7 +44,7 @@ public class JooqSubscriptionType implements SubscriptionTypeRepository {
 
     @Override
     public void create(SubscriptionType subscriptionType) {
-        SubscriptionTypesRecord record = new SubscriptionTypesRecord();
+        SubscriptionTypesRecord record = db.newRecord(SUBSCRIPTION_TYPES);
         fillRecord(record, subscriptionType);
         record.insert();
     }
@@ -63,12 +63,12 @@ public class JooqSubscriptionType implements SubscriptionTypeRepository {
     }
 
     @Override
-    public SubscriptionType findById(UUID subscriptionTypeUuid) {
+    public SubscriptionType findById(UUID subscriptionTypeId) {
         return db
                 .selectFrom(SUBSCRIPTION_TYPES)
-                .where(SUBSCRIPTION_TYPES.ID.eq(subscriptionTypeUuid))
+                .where(SUBSCRIPTION_TYPES.ID.eq(subscriptionTypeId))
                 .fetchOptional(mapper)
-                .orElseThrow(() -> new ObjectNotFoundException(subscriptionTypeUuid, "SubscriptionType"));
+                .orElseThrow(() -> new ObjectNotFoundException(subscriptionTypeId, "SubscriptionType"));
     }
 
     @Override
@@ -88,9 +88,9 @@ public class JooqSubscriptionType implements SubscriptionTypeRepository {
     }
 
     @Override
-    public void delete(UUID subscriptionTypeUuid) {
+    public void delete(UUID subscriptionTypeId) {
         db.deleteFrom(SUBSCRIPTION_TYPES)
-                .where(SUBSCRIPTION_TYPES.ID.eq(subscriptionTypeUuid))
+                .where(SUBSCRIPTION_TYPES.ID.eq(subscriptionTypeId))
                 .execute();
     }
 
