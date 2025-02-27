@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.boomzin.subscriptionhub.common.search.JooqSearchUtils.UUID_EQ;
@@ -72,6 +73,14 @@ public class JooqUserRepository implements UserRepository {
                 .where(USERS.ID.eq(userUuid))
                 .fetchOptional(mapper)
                 .orElseThrow(() -> new ObjectNotFoundException(userUuid, "User"));
+    }
+
+    @Override
+    public Optional<User> getByEmail(String email) {
+        return db
+                .selectFrom(USERS)
+                .where(USERS.EMAIL.eq(email))
+                .fetchOptional(mapper);
     }
 
     @Override

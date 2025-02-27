@@ -37,6 +37,7 @@ dependencies {
 
 	compileOnly("org.projectlombok:lombok:1.18.36")
 	annotationProcessor ("org.projectlombok:lombok")
+	implementation("commons-codec:commons-codec:1.18.0")
 	"jooqGenerator"("org.jooq:jooq-codegen:${project.property("jooqVersion")}")
 	"jooqGenerator"("org.postgresql:postgresql:42.7.2")
 	implementation ("org.jooq:jooq:${project.property("jooqVersion")}")

@@ -1,4 +1,4 @@
-package com.boomzin.subscriptionhub.config;
+package com.boomzin.subscriptionhub.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.boomzin.subscriptionhub.common.search.JooqSearchUtils.STR_LIKE_IC;
@@ -75,6 +76,14 @@ public class JooqSessionRepository implements SessionRepository {
                 .where(SESSIONS.ID.eq(sessionUuid))
                 .fetchOptional(mapper)
                 .orElseThrow(() -> new ObjectNotFoundException(sessionUuid, "Session"));
+    }
+
+    @Override
+    public Optional<Session> getByUserId(UUID userId) {
+        return db
+                .selectFrom(SESSIONS)
+                .where(SESSIONS.USER_ID.eq(userId))
+                .fetchOptional(mapper);
     }
 
     @Override

@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Subscription extends UuidEntity {
     private UUID userId;
     private UUID typeId;
-    private LocalDate startDateTime;
+    private LocalDate startDate;
     private LocalDateTime createdAt;
     private LocalDate endDate;
     private SubscriptionStatus status;
@@ -27,7 +27,7 @@ public class Subscription extends UuidEntity {
         super(id);
         this.userId = userId;
         this.typeId = typeId;
-        this.startDateTime = startDate;
+        this.startDate = startDate;
         this.createdAt = createdAt;
         this.endDate = endDate;
         this.status = status;

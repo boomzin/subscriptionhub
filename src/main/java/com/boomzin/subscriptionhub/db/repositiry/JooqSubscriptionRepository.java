@@ -75,12 +75,22 @@ public class JooqSubscriptionRepository implements SubscriptionRepository {
     }
 
     @Override
-    public Subscription findById(UUID permissionUuid) {
+    public Subscription findById(UUID subscriptionId) {
         return db
                 .selectFrom(SUBSCRIPTIONS)
-                .where(SUBSCRIPTIONS.ID.eq(permissionUuid))
+                .where(SUBSCRIPTIONS.ID.eq(subscriptionId))
                 .fetchOptional(mapper)
-                .orElseThrow(() -> new ObjectNotFoundException(permissionUuid, "Subscription"));
+                .orElseThrow(() -> new ObjectNotFoundException(subscriptionId, "Subscription"));
+    }
+
+
+    @Override
+    public List<Subscription> getByUserId(UUID userId) {
+        return db
+                .selectFrom(SUBSCRIPTIONS)
+                .where(SUBSCRIPTIONS.USER_ID.eq(userId))
+                .fetch()
+                .map(mapper);
     }
 
     @Override
@@ -110,7 +120,7 @@ public class JooqSubscriptionRepository implements SubscriptionRepository {
         record.setId(permission.getId());
         record.setUserId(permission.getUserId());
         record.setTypeId(permission.getTypeId());
-        record.setStartDate(permission.getStartDateTime());
+        record.setStartDate(permission.getStartDate());
         record.setCreatedAt(permission.getCreatedAt());
         record.setEndDate(permission.getEndDate());
         record.setStatus(permission.getStatus());

@@ -28,7 +28,7 @@ public class SubscriptionDto {
             subscription.getId(),
             subscription.getUserId(),
             subscription.getTypeId(),
-            subscription.getStartDateTime(),
+            subscription.getStartDate(),
             subscription.getCreatedAt(),
             subscription.getEndDate(),
             subscription.getStatus()
