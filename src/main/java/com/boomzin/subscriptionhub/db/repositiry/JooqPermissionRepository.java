@@ -74,6 +74,15 @@ public class JooqPermissionRepository implements PermissionRepository {
     }
 
     @Override
+    public List<Permission> findByRoleId(UUID roleId) {
+        return db
+                .selectFrom(PERMISSIONS)
+                .where(PERMISSIONS.ID.eq(roleId))
+                .fetch()
+                .map(mapper);
+    }
+
+    @Override
     public PagedResult<Permission> search(Map<String, String> apiParams) {
         SearchCriteria criteria = SearchCriteria.getInstance(criteriaSettings, apiParams);
         SelectWhereStep<?> step = db.selectFrom(PERMISSIONS);

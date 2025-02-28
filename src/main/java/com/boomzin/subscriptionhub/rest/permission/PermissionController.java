@@ -5,6 +5,7 @@ import com.boomzin.subscriptionhub.common.data.PagedResult;
 import com.boomzin.subscriptionhub.common.response.DataApiResponse;
 import com.boomzin.subscriptionhub.common.response.PagedDataApiResponse;
 import com.boomzin.subscriptionhub.common.response.StatusApiResponse;
+import com.boomzin.subscriptionhub.config.security.SecurityPermission;
 import com.boomzin.subscriptionhub.domain.permission.Permission;
 import com.boomzin.subscriptionhub.domain.permission.PermissionService;
 import jakarta.validation.Valid;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
+@SecurityPermission("adminAccess")
 @RequestMapping(BASIC_PATH_V1 + "/permissions")
 public class PermissionController {
     private final PermissionService permissionService;

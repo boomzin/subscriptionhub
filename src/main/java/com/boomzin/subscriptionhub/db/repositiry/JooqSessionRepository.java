@@ -79,6 +79,15 @@ public class JooqSessionRepository implements SessionRepository {
     }
 
     @Override
+    public Session findByToken(String token) {
+        return db
+                .selectFrom(SESSIONS)
+                .where(SESSIONS.TOKEN.eq(token))
+                .fetchOptional(mapper)
+                .orElseThrow(() -> new ObjectNotFoundException(token, "Session"));
+    }
+
+    @Override
     public Optional<Session> getByUserId(UUID userId) {
         return db
                 .selectFrom(SESSIONS)

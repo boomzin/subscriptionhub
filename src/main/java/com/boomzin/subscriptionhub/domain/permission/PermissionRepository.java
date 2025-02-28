@@ -2,6 +2,7 @@ package com.boomzin.subscriptionhub.domain.permission;
 
 import com.boomzin.subscriptionhub.common.data.PagedResult;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -11,6 +12,8 @@ public interface PermissionRepository {
     void update(Permission permission);
 
     Permission findById(UUID permissionUuid);
+
+    List<Permission> findByRoleId(UUID roleId);
 
     PagedResult<Permission> search(Map<String, String> apiParams);
 
