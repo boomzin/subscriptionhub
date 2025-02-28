@@ -24,7 +24,7 @@ import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
 @RequestMapping(BASIC_PATH_V1 + "/users")
-@SecurityPermission("adminAccess")
+@SecurityPermission("managerAccess")
 public class UserController {
     private final UserService userService;
 
@@ -69,7 +69,7 @@ public class UserController {
         return new DataApiResponse<>(new UserDto(userService.findById(id)));
     }
 
-
+    @SecurityPermission("subscriberAccess")
     @GetMapping(value = "/checkSubscriptions")
     public DataApiResponse<CheckSubscriptionDto> getByUuid(@AuthenticationPrincipal UserDetails userDetails) {
         return new DataApiResponse<>(userService

@@ -5,6 +5,7 @@ import com.boomzin.subscriptionhub.common.data.PagedResult;
 import com.boomzin.subscriptionhub.common.response.DataApiResponse;
 import com.boomzin.subscriptionhub.common.response.PagedDataApiResponse;
 import com.boomzin.subscriptionhub.common.response.StatusApiResponse;
+import com.boomzin.subscriptionhub.config.security.SecurityPermission;
 import com.boomzin.subscriptionhub.domain.role.Role;
 import com.boomzin.subscriptionhub.domain.role.RoleService;
 import jakarta.validation.Valid;
@@ -20,6 +21,7 @@ import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
 @RequestMapping(BASIC_PATH_V1 + "/roles")
+@SecurityPermission("adminAccess")
 public class RoleController {
     private final RoleService roleService;
 

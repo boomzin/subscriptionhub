@@ -5,6 +5,7 @@ import com.boomzin.subscriptionhub.common.data.PagedResult;
 import com.boomzin.subscriptionhub.common.response.DataApiResponse;
 import com.boomzin.subscriptionhub.common.response.PagedDataApiResponse;
 import com.boomzin.subscriptionhub.common.response.StatusApiResponse;
+import com.boomzin.subscriptionhub.config.security.SecurityPermission;
 import com.boomzin.subscriptionhub.domain.subscriptiontype.SubscriptionType;
 import com.boomzin.subscriptionhub.domain.subscriptiontype.SubscriptionTypeService;
 import jakarta.validation.Valid;
@@ -20,6 +21,7 @@ import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
 @RequestMapping(BASIC_PATH_V1 + "/subscriptionTypes")
+@SecurityPermission("managerAccess")
 public class SubscriptionTypeController {
     private final SubscriptionTypeService subscriptionTypeService;
 
