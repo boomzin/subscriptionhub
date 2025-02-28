@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import static com.boomzin.subscriptionhub.common.search.JooqSearchUtils.STR_LIKE_IC;
 import static com.boomzin.subscriptionhub.common.search.JooqSearchUtils.UUID_EQ;
-import static com.boomzin.subscriptionhub.db.generated.Tables.PERMISSIONS;
+import static com.boomzin.subscriptionhub.db.generated.Tables.*;
 
 @Repository
 public class JooqPermissionRepository implements PermissionRepository {
@@ -76,10 +76,18 @@ public class JooqPermissionRepository implements PermissionRepository {
     @Override
     public List<Permission> findByRoleId(UUID roleId) {
         return db
-                .selectFrom(PERMISSIONS)
-                .where(PERMISSIONS.ID.eq(roleId))
+                .select(PERMISSIONS.fields())
+                .from(PERMISSIONS)
+                .leftJoin(ROLE_PERMISSIONS)
+                .on(PERMISSIONS.ID.eq(ROLE_PERMISSIONS.PERMISSION_ID))
+                .where(ROLE_PERMISSIONS.ROLE_ID.eq(roleId))
                 .fetch()
-                .map(mapper);
+                .map(record -> new Permission(
+                        record.get(PERMISSIONS.ID),
+                        record.get(PERMISSIONS.NAME),
+                        record.get(PERMISSIONS.DESCRIPTION)
+                        )
+                );
     }
 
     @Override

@@ -13,7 +13,7 @@ public interface SessionRepository {
 
     Session findById(UUID sessionUuid);
 
-    Session findByToken(String token);
+    Optional<Session> findByToken(String token);
 
     Optional<Session> getByUserId(UUID userId);
 

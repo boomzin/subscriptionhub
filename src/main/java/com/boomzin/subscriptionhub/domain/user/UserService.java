@@ -66,29 +66,31 @@ public class UserService {
         userRepository.delete(userUuid);
     }
 
-    public TokenInfo getTokenInfo(String token) {
-        Session session = sessionRepository.findByToken(token);
-        session.setLastActive(LocalDateTime.now(ZoneOffset.UTC));
-        User user = userRepository.findById(session.getUserId());
+    public Optional<TokenInfo> getTokenInfo(String token) {
+        Optional<TokenInfo> tokenInfo = Optional.empty();
+
+        if (token == null || token.isEmpty()) {
+            return tokenInfo;
+        }
+
+        Optional<Session> session = sessionRepository.findByToken(token);
+        if (session.isEmpty()) {
+            return tokenInfo;
+        }
+
+        Session currentSession = session.get();
+
+        if(currentSession.getUserId() == null) {
+            return tokenInfo;
+        }
+        currentSession.setLastActive(LocalDateTime.now(ZoneOffset.UTC));
+        sessionRepository.update(currentSession);
+
+        User user = userRepository.findById(currentSession.getUserId());
         List<Permission> permissions = permissionRepository.findByRoleId(user.getRoleId());
-        return new TokenInfo(user.getEmail(), permissions.stream().map(Permission::getName).toList());
+        return Optional.of(new TokenInfo(user.getEmail(), permissions.stream().map(Permission::getName).toList()));
     }
 
-    public TokenInfo getTokenInfo(String login, String password) {
-        Optional<User> user = userRepository.getByEmail(login);
-        if (user.isEmpty()) {
-            throw new DomainException(401, "invalid login or password");
-        }
-        User userEntity = user.get();
-        if (userEntity.getPasswordHash() == null) {
-            userEntity.setPasswordHash(encoder.encodePassword(password, userEntity.getId()));
-            userRepository.update(userEntity);
-        } else if (!matchPassword(userEntity, password)) {
-            throw new DomainException(401, "invalid login or password");
-        }
-        List<Permission> permissions = permissionRepository.findByRoleId(userEntity.getRoleId());
-        return new TokenInfo(userEntity.getEmail(), permissions.stream().map(Permission::getName).toList());
-    }
 
     public String login(String login, String password, String deviceId) {
         if(!StringUtils.hasText(deviceId)) {
