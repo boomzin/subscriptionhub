@@ -2,6 +2,7 @@ package com.boomzin.subscriptionhub.config.security;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -12,15 +13,19 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
+
 public class SecurityPermissionHandlerInterceptor implements HandlerInterceptor {
     private static final Logger log = LoggerFactory.getLogger(SecurityPermissionHandlerInterceptor.class);
+    private static final List<String> PUBLIC_PATHS = List.of(BASIC_PATH_V1 + "/login");
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull Object handler) {
         if (handler instanceof HandlerMethod) {
             log.debug("Start checking permissions for method {}", request.getRequestURI());
             return checkPermissions(request, response, (HandlerMethod) handler);
@@ -29,22 +34,32 @@ public class SecurityPermissionHandlerInterceptor implements HandlerInterceptor 
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response,
-                           Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
+                           @NotNull Object handler, ModelAndView modelAndView) {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-                                Object handler, Exception ex) throws Exception {
+    public void afterCompletion(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
+                                @NotNull Object handler, Exception ex) {
 
     }
 
     private boolean checkPermissions(HttpServletRequest request, HttpServletResponse response,
                                      HandlerMethod handler) {
+
+        String requestPath = request.getRequestURI();
+
+        if (PUBLIC_PATHS.contains(requestPath)) {
+            return true;
+        }
         return getAnnotation(handler)
                 .map(annotation -> processAnnotation(annotation, request, response))
-                .orElse(true);
+                .orElseGet(() -> {
+                    log.debug("No @SecurityPermission annotation found, access denied");
+                    response.setStatus(HttpStatus.FORBIDDEN.value());
+                    return false;
+                });
     }
 
     private Optional<SecurityPermission> getAnnotation(HandlerMethod handler) {
