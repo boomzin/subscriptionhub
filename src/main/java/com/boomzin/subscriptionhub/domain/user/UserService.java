@@ -3,6 +3,7 @@ package com.boomzin.subscriptionhub.domain.user;
 import com.boomzin.subscriptionhub.common.data.PagedResult;
 import com.boomzin.subscriptionhub.common.exception.DomainException;
 import com.boomzin.subscriptionhub.common.exception.PlainException;
+import com.boomzin.subscriptionhub.config.security.RSASignature;
 import com.boomzin.subscriptionhub.config.security.Sha256PasswordEncoder;
 import com.boomzin.subscriptionhub.config.security.TokenInfo;
 import com.boomzin.subscriptionhub.db.generated.enums.SubscriptionStatus;
@@ -12,6 +13,8 @@ import com.boomzin.subscriptionhub.domain.session.Session;
 import com.boomzin.subscriptionhub.domain.session.SessionRepository;
 import com.boomzin.subscriptionhub.domain.subscription.Subscription;
 import com.boomzin.subscriptionhub.domain.subscription.SubscriptionRepository;
+import com.boomzin.subscriptionhub.rest.user.CheckSubscriptionDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -19,11 +22,7 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.*;
 
 @Service
 @Transactional
@@ -33,17 +32,22 @@ public class UserService {
     private final PermissionRepository permissionRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final Sha256PasswordEncoder encoder;
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final RSASignature rsaSignature;
+
 
     public UserService(UserRepository userRepository,
                        SessionRepository sessionRepository,
                        PermissionRepository permissionRepository,
                        SubscriptionRepository subscriptionRepository,
-                       Sha256PasswordEncoder encoder) {
+                       Sha256PasswordEncoder encoder,
+                       RSASignature rsaSignature) {
         this.userRepository = userRepository;
         this.sessionRepository = sessionRepository;
         this.permissionRepository = permissionRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.encoder = encoder;
+        this.rsaSignature = rsaSignature;
     }
 
     public User findById(UUID userUuid) {
@@ -92,6 +96,39 @@ public class UserService {
     }
 
 
+    public Optional<User> findByEmail(String email) {
+        return userRepository.getByEmail(email);
+    }
+
+    public CheckSubscriptionDto checkSubscription(UUID userId) {
+        List<Subscription> subscriptions = subscriptionRepository.getByUserId(userId);
+        List<Subscription> activeSubscriptions = getActiveSubscriptions(subscriptions);
+        if (activeSubscriptions.isEmpty()) {
+            throw new DomainException(402, "Active subscription not found");
+        }
+        String signature;
+        try {
+            signature = rsaSignature.signData(objectMapper.writeValueAsString(activeSubscriptions));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return new CheckSubscriptionDto(activeSubscriptions, signature);
+    }
+
+
+    private List<Subscription> getActiveSubscriptions(List<Subscription> subscriptions) {
+        List<Subscription> activeSubscriptions = new ArrayList<>();
+        for (Subscription subscription : subscriptions) {
+            if (subscription.getStatus() == SubscriptionStatus.ACTIVE
+                    && (subscription.getStartDate().isBefore(LocalDate.now(ZoneOffset.UTC)) || subscription.getStartDate().isEqual(LocalDate.now(ZoneOffset.UTC)))
+                    && (subscription.getEndDate().isAfter(LocalDate.now(ZoneOffset.UTC))) || subscription.getEndDate().isEqual(LocalDate.now(ZoneOffset.UTC))) {
+                activeSubscriptions.add(subscription);
+            }
+        }
+        return activeSubscriptions;
+    }
+
     public String login(String login, String password, String deviceId) {
         if(!StringUtils.hasText(deviceId)) {
             throw new DomainException(400, "empty device id");
@@ -114,16 +151,8 @@ public class UserService {
         }
 
         List<Subscription> subscriptions = subscriptionRepository.getByUserId(userEntity.getId());
-        AtomicBoolean hasActiveSubscription = new AtomicBoolean(false);
-        subscriptions.forEach(subscription -> {
-            if (subscription.getStatus() == SubscriptionStatus.ACTIVE
-                    && (subscription.getStartDate().isBefore(LocalDate.now(ZoneOffset.UTC)) || subscription.getStartDate().isEqual(LocalDate.now(ZoneOffset.UTC)))
-                    && (subscription.getEndDate().isAfter(LocalDate.now(ZoneOffset.UTC))) || subscription.getEndDate().isEqual(LocalDate.now(ZoneOffset.UTC))) {
-                hasActiveSubscription.set(true);
-            }
-        });
-
-        if (!hasActiveSubscription.get()) {
+        List<Subscription> activeSubscriptions = getActiveSubscriptions(subscriptions);
+        if (activeSubscriptions.isEmpty()) {
             throw new PlainException("There is no active or unexpired subscription");
         }
         return getToken(userEntity, deviceId);

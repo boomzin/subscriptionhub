@@ -2,13 +2,17 @@ package com.boomzin.subscriptionhub.rest.user;
 
 
 import com.boomzin.subscriptionhub.common.data.PagedResult;
+import com.boomzin.subscriptionhub.common.exception.DomainException;
 import com.boomzin.subscriptionhub.common.response.DataApiResponse;
 import com.boomzin.subscriptionhub.common.response.PagedDataApiResponse;
 import com.boomzin.subscriptionhub.common.response.StatusApiResponse;
+import com.boomzin.subscriptionhub.config.security.SecurityPermission;
 import com.boomzin.subscriptionhub.domain.user.User;
 import com.boomzin.subscriptionhub.domain.user.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,6 +24,7 @@ import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
 @RequestMapping(BASIC_PATH_V1 + "/users")
+@SecurityPermission("adminAccess")
 public class UserController {
     private final UserService userService;
 
@@ -62,6 +67,17 @@ public class UserController {
             @PathVariable("id") UUID id
     ) {
         return new DataApiResponse<>(new UserDto(userService.findById(id)));
+    }
+
+
+    @GetMapping(value = "/checkSubscriptions")
+    public DataApiResponse<CheckSubscriptionDto> getByUuid(@AuthenticationPrincipal UserDetails userDetails) {
+        return new DataApiResponse<>(userService
+                .checkSubscription(userService
+                        .findByEmail(userDetails.getUsername())
+                        .orElseThrow(() -> new DomainException(400, "User not found, check authentication data")).getId()
+                )
+        );
     }
 
 
