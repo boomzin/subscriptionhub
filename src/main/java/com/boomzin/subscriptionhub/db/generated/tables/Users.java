@@ -82,7 +82,7 @@ public class Users extends TableImpl<UsersRecord> {
     /**
      * The column <code>users.password_hash</code>.
      */
-    public final TableField<UsersRecord, String> PASSWORD_HASH = createField(DSL.name("password_hash"), SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<UsersRecord, String> PASSWORD_HASH = createField(DSL.name("password_hash"), SQLDataType.CLOB, this, "");
 
     /**
      * The column <code>users.created_at</code>.
