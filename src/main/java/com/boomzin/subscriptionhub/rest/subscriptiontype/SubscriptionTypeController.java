@@ -21,7 +21,7 @@ import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
 @RequestMapping(BASIC_PATH_V1 + "/subscriptionTypes")
-@SecurityPermission("managerAccess")
+@SecurityPermission("managementAccess")
 public class SubscriptionTypeController {
     private final SubscriptionTypeService subscriptionTypeService;
 
