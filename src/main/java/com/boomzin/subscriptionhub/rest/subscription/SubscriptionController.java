@@ -89,7 +89,7 @@ public class SubscriptionController {
                         UUID.randomUUID(),
                         dto.getUserId(),
                         dto.getTypeId(),
-                        dto.getStartDateTime(),
+                        dto.getStartDate(),
                         dto.getCreatedAt(),
                         dto.getEndDate(),
                         dto.getStatus()
@@ -109,7 +109,7 @@ public class SubscriptionController {
                         dto.getId(),
                         dto.getUserId(),
                         dto.getTypeId(),
-                        dto.getStartDateTime(),
+                        dto.getStartDate(),
                         dto.getCreatedAt(),
                         dto.getEndDate(),
                         dto.getStatus()

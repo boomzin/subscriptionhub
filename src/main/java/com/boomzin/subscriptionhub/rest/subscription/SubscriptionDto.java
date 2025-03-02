@@ -2,6 +2,7 @@ package com.boomzin.subscriptionhub.rest.subscription;
 
 import com.boomzin.subscriptionhub.db.generated.enums.SubscriptionStatus;
 import com.boomzin.subscriptionhub.domain.subscription.Subscription;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +19,11 @@ public class SubscriptionDto {
     private UUID id;
     private UUID userId;
     private UUID typeId;
-    private LocalDate startDateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private SubscriptionStatus status;
 
