@@ -24,7 +24,7 @@ import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
 @RequestMapping(BASIC_PATH_V1 + "/users")
-@SecurityPermission("managerAccess")
+@SecurityPermission("managementAccess")
 public class UserController {
     private final UserService userService;
 
