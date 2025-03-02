@@ -1,0 +1,332 @@
+{
+	"info": {
+		"_postman_id": "e581646c-7025-41aa-97f7-8e6439075b9d",
+		"name": "subscriptionhub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25323882"
+	},
+	"item": [
+		{
+			"name": "permissions",
+			"item": [
+				{
+					"name": "list_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/permissions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"permissions"
+							],
+							"query": [
+								{
+									"key": "access",
+									"value": "adminAccess",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{nginxBaseUrl}}/permissions/:id",
+							"host": [
+								"{{nginxBaseUrl}}"
+							],
+							"path": [
+								"permissions",
+								":id"
+							],
+							"query": [
+								{
+									"key": "access",
+									"value": "adminAccess",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "bcb45d21-fff5-4386-b200-c17402a5534e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change_one",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"bcb45d21-fff5-4386-b200-c17402a5534e\",\n    \"name\": \"adminAccess\",\n    \"description\": \"Доступ к административным функциям1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nginxBaseUrl}}/permissions/:id",
+							"host": [
+								"{{nginxBaseUrl}}"
+							],
+							"path": [
+								"permissions",
+								":id"
+							],
+							"query": [
+								{
+									"key": "access",
+									"value": "adminAccess",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "bcb45d21-fff5-4386-b200-c17402a5534e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"adminAccess1\",\n    \"description\": \"Доступ к административным функциям11111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{nginxBaseUrl}}/permissions",
+							"host": [
+								"{{nginxBaseUrl}}"
+							],
+							"path": [
+								"permissions"
+							],
+							"query": [
+								{
+									"key": "access",
+									"value": "adminAccess",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subscriber",
+			"item": [
+				{
+					"name": "checkSubscriptions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}users/checkSubscriptions",
+							"host": [
+								"{{baseUrl}}users"
+							],
+							"path": [
+								"checkSubscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"email_797b4a976a3e\",\n  \"roleId\": \"ab23c072-e407-4f31-8e6e-d2452ef9bbf3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "access",
+									"value": "managementAccess",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subscriptions",
+			"item": [
+				{
+					"name": "create_subscriptions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"ea07bbb0-1e64-4af0-bcee-92cf9723d711\",\n  \"userId\": \"ea07bbb0-1e64-4af0-bcee-92cf9723d775\",\n  \"typeId\": \"7e12e5f9-1945-4e19-9c7d-e6fdf928433e\",\n  \"startDate\": \"2025-03-02\",\n  \"createdAt\": \"2025-03-02T10:45:17\",\n  \"endDate\": \"2025-03-03\",\n  \"status\": \"ACTIVE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subscriptions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptions"
+							],
+							"query": [
+								{
+									"key": "access",
+									"value": "managementAccess",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Device-Id",
+						"value": "2323231123d",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"username\": \"admin@example.com\",\n  \"password\": \"Temp1234!!$$\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "access",
+							"value": "permit all",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "127.0.0.1:8080/api/rest/subscriptions/v1",
+			"type": "string"
+		},
+		{
+			"key": "dockerBaseUrl",
+			"value": "127.0.0.1:8090/api/rest/subscriptions/v1",
+			"type": "string"
+		},
+		{
+			"key": "nginxBaseUrl",
+			"value": "http://localhost/subscriptions",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "133614c6-10c9-43bb-aa86-88886063b736",
+			"type": "string"
+		}
+	]
+}
