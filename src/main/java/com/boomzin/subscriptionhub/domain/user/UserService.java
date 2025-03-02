@@ -15,6 +15,7 @@ import com.boomzin.subscriptionhub.domain.subscription.Subscription;
 import com.boomzin.subscriptionhub.domain.subscription.SubscriptionRepository;
 import com.boomzin.subscriptionhub.rest.user.CheckSubscriptionDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -48,6 +49,7 @@ public class UserService {
         this.subscriptionRepository = subscriptionRepository;
         this.encoder = encoder;
         this.rsaSignature = rsaSignature;
+        objectMapper.registerModule(new JavaTimeModule());
     }
 
     public User findById(UUID userUuid) {

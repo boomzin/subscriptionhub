@@ -4,9 +4,12 @@ import com.boomzin.subscriptionhub.common.data.PagedResult;
 import com.boomzin.subscriptionhub.common.exception.ObjectNotFoundException;
 import com.boomzin.subscriptionhub.common.search.SearchCriteria;
 import com.boomzin.subscriptionhub.common.search.SearchCriteriaSettings;
+import com.boomzin.subscriptionhub.db.generated.enums.SubscriptionStatus;
 import com.boomzin.subscriptionhub.db.generated.tables.records.SubscriptionsRecord;
 import com.boomzin.subscriptionhub.domain.subscription.Subscription;
 import com.boomzin.subscriptionhub.domain.subscription.SubscriptionRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
 import org.jooq.SelectWhereStep;
@@ -19,10 +22,12 @@ import java.util.UUID;
 import static com.boomzin.subscriptionhub.common.search.JooqSearchUtils.*;
 import static com.boomzin.subscriptionhub.db.generated.Tables.SUBSCRIPTIONS;
 
+
 @Repository
 public class JooqSubscriptionRepository implements SubscriptionRepository {
     private final DSLContext db;
     private final SearchCriteriaSettings criteriaSettings;
+    private static final Logger log = LogManager.getLogger(JooqSubscriptionRepository.class);
 
     private final RecordMapper<SubscriptionsRecord, Subscription> mapper = r -> new Subscription(
             r.getId(),
@@ -68,7 +73,10 @@ public class JooqSubscriptionRepository implements SubscriptionRepository {
                 SUBSCRIPTIONS.ID.eq(permission.getId()))
                 .orElseThrow(() -> new ObjectNotFoundException(permission.getId(), "Subscription"));
 
-
+        log.info("Attempting to insert subscription: id={}, userId={}, typeId={}, startDate={}, createdAt={}, endDate={}, status={}",
+                record.getId(), record.getUserId(), record.getTypeId(),
+                record.getStartDate(), record.getCreatedAt(), record.getEndDate(),
+                record.getStatus());
         fillRecord(record, permission);
         record.store();
 
@@ -123,6 +131,8 @@ public class JooqSubscriptionRepository implements SubscriptionRepository {
         record.setStartDate(permission.getStartDate());
         record.setCreatedAt(permission.getCreatedAt());
         record.setEndDate(permission.getEndDate());
-        record.setStatus(permission.getStatus());
+        record.setStatus(SubscriptionStatus.valueOf(permission.getStatus().getLiteral().toUpperCase()));
+
+//        record.setStatus(permission.getStatus());
     }
 }

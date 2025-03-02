@@ -1,13 +1,15 @@
 package com.boomzin.subscriptionhub.config;
 
+import com.boomzin.subscriptionhub.common.JooqLoggingListener;
 import com.zaxxer.hikari.HikariDataSource;
 import org.jooq.ConnectionProvider;
-import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.conf.RenderNameCase;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DataSourceConnectionProvider;
+import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
+import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,7 +47,19 @@ public class PersistenceConfig {
     }
 
     @Bean
-    DSLContext context() {
-        return new DefaultDSLContext(connectionProvider(), SQLDialect.POSTGRES, jooqSettings());
+    public DefaultDSLContext context(DataSource dataSource) {
+        DefaultConfiguration config = (DefaultConfiguration) new DefaultConfiguration()
+                .set(dataSource)
+                .set(SQLDialect.POSTGRES)
+                .set(jooqSettings())
+                .set(connectionProvider())
+                .set(new DefaultExecuteListenerProvider(new JooqLoggingListener()));
+
+        return new DefaultDSLContext(config);
     }
+
+//    @Bean
+//    DSLContext context() {
+//        return new DefaultDSLContext(connectionProvider(), SQLDialect.POSTGRES, jooqSettings());
+//    }
 }

@@ -35,6 +35,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-jooq")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 
+	testImplementation("org.slf4j:slf4j-log4j12:2.0.17")
+
 	compileOnly("org.projectlombok:lombok:1.18.36")
 	annotationProcessor ("org.projectlombok:lombok")
 	implementation("commons-codec:commons-codec:1.18.0")
