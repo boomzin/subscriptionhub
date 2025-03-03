@@ -84,12 +84,12 @@ public class SubscriptionTypeController {
     @PutMapping(value = "/{id}")
     @SecurityPermission("adminAccess")
     public StatusApiResponse update(
-
+            @PathVariable("id") UUID id,
             @RequestBody @Valid SubscriptionTypeDto dto
     ) {
         subscriptionTypeService.update(
                 new SubscriptionType(
-                        dto.getId(),
+                        id,
                         dto.getName(),
                         dto.getDurationDays(),
                         dto.getPrice(),
