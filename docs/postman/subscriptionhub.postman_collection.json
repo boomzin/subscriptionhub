@@ -21,13 +21,6 @@
 							],
 							"path": [
 								"permissions"
-							],
-							"query": [
-								{
-									"key": "access",
-									"value": "adminAccess",
-									"disabled": true
-								}
 							]
 						}
 					},
@@ -39,20 +32,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{nginxBaseUrl}}/permissions/:id",
+							"raw": "{{baseUrl}}/permissions/:id",
 							"host": [
-								"{{nginxBaseUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"permissions",
 								":id"
-							],
-							"query": [
-								{
-									"key": "access",
-									"value": "adminAccess",
-									"disabled": true
-								}
 							],
 							"variable": [
 								{
@@ -71,7 +57,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"bcb45d21-fff5-4386-b200-c17402a5534e\",\n    \"name\": \"adminAccess\",\n    \"description\": \"Доступ к административным функциям1\"\n}",
+							"raw": "{\n    \"name\": \"subscriberAccess\",\n    \"description\": \"Доступ к административным 000000\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -79,25 +65,42 @@
 							}
 						},
 						"url": {
-							"raw": "{{nginxBaseUrl}}/permissions/:id",
+							"raw": "{{baseUrl}}/permissions/:id",
 							"host": [
-								"{{nginxBaseUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"permissions",
 								":id"
 							],
-							"query": [
+							"variable": [
 								{
-									"key": "access",
-									"value": "adminAccess",
-									"disabled": true
+									"key": "id",
+									"value": "7e2e572c-db03-4a2b-9afb-8f31d009591b"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/permissions/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"permissions",
+								":id"
 							],
 							"variable": [
 								{
 									"key": "id",
-									"value": "bcb45d21-fff5-4386-b200-c17402a5534e"
+									"value": "e8bdf70f-5a57-4d45-b869-3fc0c31aa495"
 								}
 							]
 						}
@@ -111,7 +114,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"adminAccess1\",\n    \"description\": \"Доступ к административным функциям11111\"\n}",
+							"raw": "{\n    \"name\": \"1212121212\",\n    \"description\": \"Доступ к административным 1111111\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -119,18 +122,140 @@
 							}
 						},
 						"url": {
-							"raw": "{{nginxBaseUrl}}/permissions",
+							"raw": "{{baseUrl}}/permissions",
 							"host": [
-								"{{nginxBaseUrl}}"
+								"{{baseUrl}}"
 							],
 							"path": [
 								"permissions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "list_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/roles",
+							"host": [
+								"{{baseUrl}}"
 							],
-							"query": [
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/roles/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roles",
+								":id"
+							],
+							"variable": [
 								{
-									"key": "access",
-									"value": "adminAccess",
-									"disabled": true
+									"key": "id",
+									"value": "ab23c072-e407-4f31-8e6e-d2452ef9bbf3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change_one",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"121212121212\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/roles/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4364b76b-ddc9-4733-bf31-11c8c691ed2a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"1212121212\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/roles",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/roles/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"roles",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "50b03b4c-7695-4516-9893-e171bd4846b5"
 								}
 							]
 						}
@@ -140,19 +265,433 @@
 			]
 		},
 		{
-			"name": "subscriber",
+			"name": "rolesPermissions",
 			"item": [
 				{
-					"name": "checkSubscriptions",
+					"name": "list_all",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}users/checkSubscriptions",
+							"raw": "{{baseUrl}}/rolePermissions",
 							"host": [
-								"{{baseUrl}}users"
+								"{{baseUrl}}"
 							],
 							"path": [
+								"rolePermissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"roleId\": \"4364b76b-ddc9-4733-bf31-11c8c691ed2a\",\n    \"permissionId\": \"7e2e572c-db03-4a2b-9afb-8f31d009591b\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/rolePermissions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rolePermissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/rolePermissions?roleId=4364b76b-ddc9-4733-bf31-11c8c691ed2a&permissionId=7e2e572c-db03-4a2b-9afb-8f31d009591b",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rolePermissions"
+							],
+							"query": [
+								{
+									"key": "roleId",
+									"value": "4364b76b-ddc9-4733-bf31-11c8c691ed2a"
+								},
+								{
+									"key": "permissionId",
+									"value": "7e2e572c-db03-4a2b-9afb-8f31d009591b"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sessions",
+			"item": [
+				{
+					"name": "list_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sessions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sessions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sessions/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sessions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "9e1a827e-79c1-4319-b7b5-b87120f67f07"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/sessions/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"sessions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "9e1a827e-79c1-4319-b7b5-b87120f67f07"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subscriptions",
+			"item": [
+				{
+					"name": "list_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subscriptions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subscriptions/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "216ab0b8-fc8d-4f7d-907f-d26f5dc3131a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change_one",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"userId\": \"ea07bbb0-1e64-4af0-bcee-92cf9723d775\",\n            \"typeId\": \"40e81ccc-8b7a-4191-9410-4d8c34add85b\",\n            \"startDate\": \"2025-03-02\",\n            \"createdAt\": \"2025-03-02 10:45:17\",\n            \"endDate\": \"2026-03-02\",\n            \"status\": \"SUSPENDED\"\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subscriptions/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "e55bbe61-d4d2-48c4-84d1-ca62bda1c301"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"userId\": \"ea07bbb0-1e64-4af0-bcee-92cf9723d775\",\n        \"typeId\": \"40e81ccc-8b7a-4191-9410-4d8c34add85b\",\n        \"startDate\": \"2025-03-02\",\n        \"createdAt\": \"2025-03-02 10:45:17\",\n        \"status\": \"ACTIVE\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subscriptions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subscriptions/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "e55bbe61-d4d2-48c4-84d1-ca62bda1c301"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subscriptionTypes",
+			"item": [
+				{
+					"name": "list_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subscriptionTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptionTypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subscriptionTypes/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptionTypes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "902e556f-8b26-4a8e-a4dc-e34d5262b636"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change_one",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"1 день\",\n        \"durationDays\": 1,\n        \"price\": 110.00,\n        \"feature\": null\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subscriptionTypes/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptionTypes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "60e4a54a-6d8b-4a8a-b347-15a546708600"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create_new",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"1111 день\",\n        \"durationDays\": 1,\n        \"price\": 0.00,\n        \"feature\": null\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/subscriptionTypes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptionTypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/subscriptionTypes/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"subscriptionTypes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "60e4a54a-6d8b-4a8a-b347-15a546708600"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "checkSubscriptions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{userToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/checkSubscriptions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
 								"checkSubscriptions"
 							]
 						}
@@ -166,7 +705,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"email_797b4a976a3e\",\n  \"roleId\": \"ab23c072-e407-4f31-8e6e-d2452ef9bbf3\"\n}",
+							"raw": "{\n  \"email\": \"email_terstDima1212\",\n  \"roleId\": \"ab23c072-e407-4f31-8e6e-d2452ef9bbf3\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -191,20 +730,56 @@
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "subscriptions",
-			"item": [
+				},
 				{
-					"name": "create_subscriptions",
+					"name": "list_all",
 					"request": {
-						"method": "POST",
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6f5d7b5e-3c89-4a9f-9c9e-1b6d8c2f4a7d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change_one",
+					"request": {
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"id\": \"ea07bbb0-1e64-4af0-bcee-92cf9723d711\",\n  \"userId\": \"ea07bbb0-1e64-4af0-bcee-92cf9723d775\",\n  \"typeId\": \"7e12e5f9-1945-4e19-9c7d-e6fdf928433e\",\n  \"startDate\": \"2025-03-02\",\n  \"createdAt\": \"2025-03-02T10:45:17\",\n  \"endDate\": \"2025-03-03\",\n  \"status\": \"ACTIVE\"\n}",
+							"raw": " {\n            \n            \"email\": \"admin@example.com\",\n            \"createdAt\": \"2000-03-02T10:28:33.516673\",\n            \"roleId\": \"00000000-0000-0000-0000-000000000001\"\n        }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -212,18 +787,42 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/subscriptions",
+							"raw": "{{baseUrl}}/users/:id",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"subscriptions"
+								"users",
+								":id"
 							],
-							"query": [
+							"variable": [
 								{
-									"key": "access",
-									"value": "managementAccess",
-									"disabled": true
+									"key": "id",
+									"value": "6f5d7b5e-3c89-4a9f-9c9e-1b6d8c2f4a7d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_one",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3f4a9284-39ee-4954-94b4-2d6622b46321"
 								}
 							]
 						}
@@ -262,13 +861,6 @@
 					],
 					"path": [
 						"login"
-					],
-					"query": [
-						{
-							"key": "access",
-							"value": "permit all",
-							"disabled": true
-						}
 					]
 				}
 			},
@@ -280,7 +872,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "{{token}}",
+				"value": "{{adminToken}}",
 				"type": "string"
 			}
 		]
@@ -324,8 +916,13 @@
 			"type": "string"
 		},
 		{
-			"key": "token",
-			"value": "133614c6-10c9-43bb-aa86-88886063b736",
+			"key": "adminToken",
+			"value": "ad4b690a-169f-4993-bed1-effb83b7dff1",
+			"type": "string"
+		},
+		{
+			"key": "userToken",
+			"value": "ad4b690a-169f-4993-bed1-effb83b7dff1",
 			"type": "string"
 		}
 	]
