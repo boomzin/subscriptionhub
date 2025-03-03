@@ -2,6 +2,7 @@ package com.boomzin.subscriptionhub.rest.user;
 
 import com.boomzin.subscriptionhub.domain.user.User;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ public class UserDto {
     @NotBlank
     private String email;
     private LocalDateTime createdAt;
-    @NotBlank
+    @NotNull
     private UUID roleId;
 
     public UserDto(User user) {

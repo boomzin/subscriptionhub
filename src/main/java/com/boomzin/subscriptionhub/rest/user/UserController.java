@@ -115,12 +115,12 @@ public class UserController {
     @PutMapping(value = "/{id}")
     @SecurityPermission("adminAccess")
     public StatusApiResponse update(
-
+            @PathVariable("id") UUID id,
             @RequestBody @Valid UserDto dto
     ) {
         userService.update(
                 new User(
-                        UUID.randomUUID(),
+                        id,
                         dto.getEmail(),
                         null,
                         dto.getCreatedAt(),
