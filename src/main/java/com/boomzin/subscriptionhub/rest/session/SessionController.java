@@ -63,7 +63,7 @@ public class SessionController {
     }
 
     @GetMapping(value = "/{id}")
-    public DataApiResponse<SessionDto> getByUuid(
+    public DataApiResponse<SessionDto> getById(
             @PathVariable("id") UUID id
     ) {
         return new DataApiResponse<>(new SessionDto(sessionService.findById(id)));

@@ -16,8 +16,8 @@ public class RoleService {
         this.repository = repository;
     }
 
-    public Role findById(UUID roleUuid) {
-        return repository.findById(roleUuid);
+    public Role findById(UUID roleId) {
+        return repository.findById(roleId);
     }
 
     public PagedResult<Role> search(Map<String, String> apiParams) {
@@ -32,8 +32,8 @@ public class RoleService {
         repository.create(role);
     }
 
-    public void delete(UUID roleUuid) {
-        repository.delete(roleUuid);
+    public void delete(UUID roleId) {
+        repository.delete(roleId);
     }
 
 }

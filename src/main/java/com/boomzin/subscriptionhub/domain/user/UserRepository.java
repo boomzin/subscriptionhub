@@ -11,10 +11,10 @@ public interface UserRepository {
 
     void update(User user);
 
-    User findById(UUID userUuid);
+    User findById(UUID userId);
     Optional<User> getByEmail(String email);
 
     PagedResult<User> search(Map<String, String> apiParams);
 
-    void delete(UUID userUuid);
+    void delete(UUID userId);
 }

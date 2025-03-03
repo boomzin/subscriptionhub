@@ -16,8 +16,8 @@ public class SessionService {
         this.repository = repository;
     }
 
-    public Session findById(UUID sessionUuid) {
-        return repository.findById(sessionUuid);
+    public Session findById(UUID sessionId) {
+        return repository.findById(sessionId);
     }
 
     public PagedResult<Session> search(Map<String, String> apiParams) {
@@ -32,8 +32,8 @@ public class SessionService {
         repository.create(session);
     }
 
-    public void delete(UUID sessionUuid) {
-        repository.delete(sessionUuid);
+    public void delete(UUID sessionId) {
+        repository.delete(sessionId);
     }
 
 }

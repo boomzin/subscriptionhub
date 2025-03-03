@@ -1,6 +1,7 @@
 package com.boomzin.subscriptionhub.rest.user;
 
 import com.boomzin.subscriptionhub.domain.user.User;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserDto {
     private UUID id;
+    @NotBlank
     private String email;
     private LocalDateTime createdAt;
+    @NotBlank
     private UUID roleId;
 
     public UserDto(User user) {

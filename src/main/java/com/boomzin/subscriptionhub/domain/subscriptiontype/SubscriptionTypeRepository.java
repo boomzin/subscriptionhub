@@ -11,9 +11,9 @@ public interface SubscriptionTypeRepository {
 
     void update(SubscriptionType subscriptionType);
 
-    SubscriptionType findById(UUID subscriptionTypeUuid);
+    SubscriptionType findById(UUID subscriptionTypeIid);
 
     PagedResult<SubscriptionType> search(Map<String, String> apiParams);
 
-    void delete(UUID subscriptionTypeUuid);
+    void delete(UUID subscriptionTypeId);
 }

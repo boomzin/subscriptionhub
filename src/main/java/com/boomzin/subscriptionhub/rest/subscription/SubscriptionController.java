@@ -74,7 +74,7 @@ public class SubscriptionController {
     }
 
     @GetMapping(value = "/{id}")
-    public DataApiResponse<SubscriptionDto> getByUuid(
+    public DataApiResponse<SubscriptionDto> getById(
             @PathVariable("id") UUID id
     ) {
         return new DataApiResponse<>(new SubscriptionDto(subscriptionService.findById(id)));

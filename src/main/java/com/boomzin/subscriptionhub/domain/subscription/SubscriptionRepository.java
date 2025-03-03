@@ -11,11 +11,11 @@ public interface SubscriptionRepository {
 
     void update(Subscription subscription);
 
-    Subscription findById(UUID subscriptionUuid);
+    Subscription findById(UUID subscriptionId);
 
     List<Subscription> getByUserId(UUID userId);
 
     PagedResult<Subscription> search(Map<String, String> apiParams);
 
-    void delete(UUID subscriptionUuid);
+    void delete(UUID subscriptionId);
 }

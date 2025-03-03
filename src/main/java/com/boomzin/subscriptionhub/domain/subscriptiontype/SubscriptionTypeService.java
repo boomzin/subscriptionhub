@@ -16,8 +16,8 @@ public class SubscriptionTypeService {
         this.repository = repository;
     }
 
-    public SubscriptionType findById(UUID subscriptionTypeUuid) {
-        return repository.findById(subscriptionTypeUuid);
+    public SubscriptionType findById(UUID subscriptionTypeId) {
+        return repository.findById(subscriptionTypeId);
     }
 
     public PagedResult<SubscriptionType> search(Map<String, String> apiParams) {
@@ -32,8 +32,8 @@ public class SubscriptionTypeService {
         repository.create(subscriptionType);
     }
 
-    public void delete(UUID subscriptionTypeUuid) {
-        repository.delete(subscriptionTypeUuid);
+    public void delete(UUID subscriptionTypeId) {
+        repository.delete(subscriptionTypeId);
     }
 
 }

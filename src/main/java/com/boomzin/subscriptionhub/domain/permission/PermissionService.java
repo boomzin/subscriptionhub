@@ -16,8 +16,8 @@ public class PermissionService {
         this.repository = repository;
     }
 
-    public Permission findById(UUID permissionUuid) {
-        return repository.findById(permissionUuid);
+    public Permission findById(UUID permissionId) {
+        return repository.findById(permissionId);
     }
 
     public PagedResult<Permission> search(Map<String, String> apiParams) {
@@ -32,8 +32,8 @@ public class PermissionService {
         repository.create(permission);
     }
 
-    public void delete(UUID permissionUuid) {
-        repository.delete(permissionUuid);
+    public void delete(UUID permissionId) {
+        repository.delete(permissionId);
     }
 
 }

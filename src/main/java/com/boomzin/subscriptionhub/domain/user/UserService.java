@@ -16,6 +16,8 @@ import com.boomzin.subscriptionhub.domain.subscription.SubscriptionRepository;
 import com.boomzin.subscriptionhub.rest.user.CheckSubscriptionDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -52,8 +54,8 @@ public class UserService {
         objectMapper.registerModule(new JavaTimeModule());
     }
 
-    public User findById(UUID userUuid) {
-        return userRepository.findById(userUuid);
+    public User findById(UUID userId) {
+        return userRepository.findById(userId);
     }
 
     public PagedResult<User> search(Map<String, String> apiParams) {
@@ -64,12 +66,26 @@ public class UserService {
         userRepository.update(user);
     }
 
-    public void create(User user) {
+    public void create(User user, UserDetails userDetails) {
+        List<String> userPermissions = userDetails
+                .getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .map(String::toLowerCase)
+                .toList();
+        List<String> newUserPermissions = permissionRepository.findByRoleId(user.getRoleId())
+                .stream()
+                .map(Permission::getName)
+                .toList();
+        if (!userPermissions.contains("adminAccess")
+                && newUserPermissions.contains("adminAccess")) {
+            throw new DomainException(400, "To create admin user admin role is needed");
+        }
         userRepository.create(user);
     }
 
-    public void delete(UUID userUuid) {
-        userRepository.delete(userUuid);
+    public void delete(UUID userId) {
+        userRepository.delete(userId);
     }
 
     public Optional<TokenInfo> getTokenInfo(String token) {

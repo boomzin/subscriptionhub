@@ -11,7 +11,7 @@ public interface SessionRepository {
 
     void update(Session session);
 
-    Session findById(UUID sessionUuid);
+    Session findById(UUID sessionId);
 
     Optional<Session> findByToken(String token);
 
@@ -19,5 +19,5 @@ public interface SessionRepository {
 
     PagedResult<Session> search(Map<String, String> apiParams);
 
-    void delete(UUID sessionUuid);
+    void delete(UUID sessionId);
 }

@@ -21,7 +21,6 @@ import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
 @RequestMapping(BASIC_PATH_V1 + "/subscriptionTypes")
-@SecurityPermission("managementAccess")
 public class SubscriptionTypeController {
     private final SubscriptionTypeService subscriptionTypeService;
 
@@ -31,6 +30,7 @@ public class SubscriptionTypeController {
     }
 
     @GetMapping()
+    @SecurityPermission("managementAccess")
     public PagedDataApiResponse<SubscriptionTypeDto> list(
 
 
@@ -56,13 +56,15 @@ public class SubscriptionTypeController {
     }
 
     @GetMapping(value = "/{id}")
-    public DataApiResponse<SubscriptionTypeDto> getByUuid(
+    @SecurityPermission("managementAccess")
+    public DataApiResponse<SubscriptionTypeDto> getById(
             @PathVariable("id") UUID id
     ) {
         return new DataApiResponse<>(new SubscriptionTypeDto(subscriptionTypeService.findById(id)));
     }
 
     @PostMapping()
+    @SecurityPermission("adminAccess")
     public StatusApiResponse create(
             @RequestBody @Valid SubscriptionTypeDto dto
     ) {
@@ -80,6 +82,7 @@ public class SubscriptionTypeController {
     }
 
     @PutMapping(value = "/{id}")
+    @SecurityPermission("adminAccess")
     public StatusApiResponse update(
 
             @RequestBody @Valid SubscriptionTypeDto dto
@@ -98,6 +101,7 @@ public class SubscriptionTypeController {
     }
 
     @DeleteMapping(value = "/{id}")
+    @SecurityPermission("adminAccess")
     public StatusApiResponse delete(
             @PathVariable("id") UUID id
     ) {

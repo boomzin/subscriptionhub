@@ -60,7 +60,7 @@ public class RoleController {
     }
 
     @GetMapping(value = "/{id}")
-    public DataApiResponse<RoleDto> getByUuid(
+    public DataApiResponse<RoleDto> getById(
             @PathVariable("id") UUID id
     ) {
         return new DataApiResponse<>(new RoleDto(roleService.findById(id)));
@@ -70,24 +70,20 @@ public class RoleController {
     public StatusApiResponse create(
             @RequestBody @Valid RoleDto dto
     ) {
-        roleService.create(
-                new Role(
-                        UUID.randomUUID(),
-                        dto.getName()
-                )
-        );
+        Role role = new Role(UUID.randomUUID(), dto.getName());
+        roleService.create(role);
 
-        return new StatusApiResponse(HttpStatus.CREATED.value(), true);
+        return new DataApiResponse<>(role);
     }
 
     @PutMapping(value = "/{id}")
     public StatusApiResponse update(
-
+            @PathVariable UUID id,
             @RequestBody @Valid RoleDto dto
     ) {
         roleService.update(
                 new Role(
-                        dto.getId(),
+                        id,
                         dto.getName()
                 )
         );

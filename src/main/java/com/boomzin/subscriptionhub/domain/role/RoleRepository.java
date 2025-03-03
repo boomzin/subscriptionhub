@@ -10,9 +10,9 @@ public interface RoleRepository {
 
     void update(Role role);
 
-    Role findById(UUID roleUuid);
+    Role findById(UUID roleId);
 
     PagedResult<Role> search(Map<String, String> apiParams);
 
-    void delete(UUID roleUuid);
+    void delete(UUID roleId);
 }

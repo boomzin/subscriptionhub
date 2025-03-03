@@ -11,11 +11,11 @@ public interface PermissionRepository {
 
     void update(Permission permission);
 
-    Permission findById(UUID permissionUuid);
+    Permission findById(UUID permissionId);
 
     List<Permission> findByRoleId(UUID roleId);
 
     PagedResult<Permission> search(Map<String, String> apiParams);
 
-    void delete(UUID permissionUuid);
+    void delete(UUID permissionId);
 }

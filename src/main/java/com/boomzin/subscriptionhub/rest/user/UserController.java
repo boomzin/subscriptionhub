@@ -24,7 +24,6 @@ import static com.boomzin.subscriptionhub.common.Constants.BASIC_PATH_V1;
 
 @RestController
 @RequestMapping(BASIC_PATH_V1 + "/users")
-@SecurityPermission("managementAccess")
 public class UserController {
     private final UserService userService;
 
@@ -34,6 +33,7 @@ public class UserController {
     }
 
     @GetMapping()
+    @SecurityPermission("managementAccess")
     public PagedDataApiResponse<UserDto> list(
 
             @RequestParam(name = "id", required = false) String id,
@@ -63,7 +63,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public DataApiResponse<UserDto> getByUuid(
+    @SecurityPermission("managementAccess")
+    public DataApiResponse<UserDto> getById(
             @PathVariable("id") UUID id
     ) {
         return new DataApiResponse<>(new UserDto(userService.findById(id)));
@@ -71,7 +72,7 @@ public class UserController {
 
     @SecurityPermission("subscriberAccess")
     @GetMapping(value = "/checkSubscriptions")
-    public DataApiResponse<CheckSubscriptionDto> getByUuid(@AuthenticationPrincipal UserDetails userDetails) {
+    public DataApiResponse<CheckSubscriptionDto> getById(@AuthenticationPrincipal UserDetails userDetails) {
         return new DataApiResponse<>(userService
                 .checkSubscription(userService
                         .findByEmail(userDetails.getUsername())
@@ -82,6 +83,7 @@ public class UserController {
 
 
     @DeleteMapping(value = "/{id}")
+    @SecurityPermission("adminAccess")
     public StatusApiResponse delete(
             @PathVariable("id") UUID id
     ) {
@@ -91,8 +93,10 @@ public class UserController {
     }
 
     @PostMapping()
+    @SecurityPermission("managementAccess")
     public StatusApiResponse create(
-            @RequestBody @Valid UserDto dto
+            @RequestBody @Valid UserDto dto,
+            @AuthenticationPrincipal UserDetails userDetails
     ) {
         userService.create(
                 new User(
@@ -101,13 +105,15 @@ public class UserController {
                         null,
                         dto.getCreatedAt(),
                         dto.getRoleId()
-                )
+                ),
+                userDetails
         );
 
         return new StatusApiResponse(HttpStatus.CREATED.value(), true);
     }
 
     @PutMapping(value = "/{id}")
+    @SecurityPermission("adminAccess")
     public StatusApiResponse update(
 
             @RequestBody @Valid UserDto dto

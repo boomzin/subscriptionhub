@@ -60,7 +60,7 @@ public class PermissionController {
     }
 
     @GetMapping(value = "/{id}")
-    public DataApiResponse<PermissionDto> getByUuid(
+    public DataApiResponse<PermissionDto> getById(
             @PathVariable("id") UUID id
     ) {
         return new DataApiResponse<>(new PermissionDto(permissionService.findById(id)));
@@ -70,31 +70,31 @@ public class PermissionController {
     public StatusApiResponse create(
             @RequestBody @Valid PermissionDto dto
     ) {
-        permissionService.create(
+
+        Permission permission = new Permission(
+                UUID.randomUUID(),
+                dto.getName(),
+                dto.getDescription()
+        );
+        permissionService.create(permission);
+
+        return new DataApiResponse<>(permission);
+    }
+
+    @PutMapping(value = "/{id}")
+    public StatusApiResponse update(
+            @PathVariable UUID id,
+            @RequestBody @Valid PermissionDto dto
+    ) {
+        permissionService.update(
                 new Permission(
-                        UUID.randomUUID(),
+                        id,
                         dto.getName(),
                         dto.getDescription()
                 )
         );
 
         return new StatusApiResponse(HttpStatus.CREATED.value(), true);
-    }
-
-    @PutMapping(value = "/{id}")
-    public StatusApiResponse update(
-
-            @RequestBody @Valid PermissionDto dto
-    ) {
-        permissionService.update(
-                new Permission(
-                        dto.getId(),
-                        dto.getName(),
-                        dto.getDescription()
-                )
-        );
-
-        return new StatusApiResponse(HttpStatus.OK.value(), true);
     }
 
     @DeleteMapping(value = "/{id}")
