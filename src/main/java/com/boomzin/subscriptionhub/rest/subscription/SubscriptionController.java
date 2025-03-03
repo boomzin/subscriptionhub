@@ -101,12 +101,12 @@ public class SubscriptionController {
 
     @PutMapping(value = "/{id}")
     public StatusApiResponse update(
-
+            @PathVariable UUID id,
             @RequestBody @Valid SubscriptionDto dto
     ) {
         subscriptionService.update(
                 new Subscription(
-                        dto.getId(),
+                        id,
                         dto.getUserId(),
                         dto.getTypeId(),
                         dto.getStartDate(),
